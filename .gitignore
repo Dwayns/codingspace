@@ -1,6 +1,8 @@
 *.DS_Store
+dist
+node_modules
 tools/sublimetext/[ST2]Conf-Plugins.html
 tools/sublimetext/[ST2][EMMET]Cheatsheet.html
 wiki/workflow/[GIT]Cheatsheet.html
-wiki/[NJS]Fundamentals.html
-wiki/[TERMINAL]Cheatsheet.html
+wiki/workflow/[NJS]Fundamentals.html
+wiki/workflow/[TERMINAL]Cheatsheet.html
