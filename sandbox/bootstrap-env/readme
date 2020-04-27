@@ -1,1 +1,0 @@
-Bootstrap grid place
