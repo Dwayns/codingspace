@@ -1,0 +1,63 @@
+.card {
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;;
+    width: 60%;
+
+    .img-wrapper{
+        border: 2px solid grey;
+        border-radius: 50px;
+        overflow: hidden;
+        margin: 10px 10px;
+        height:100px;
+        width: 100px;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .infos-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin: 0 10px;
+
+        .name {
+            color: rgb(15, 156, 15);
+            font-size: 22px;
+            font-weight: 500;
+            margin: 20px 0 2px;
+            padding: 0;
+        }
+
+        .username {
+            color: cornflowerblue;
+            text-transform: lowercase;
+        }
+
+        .email, .city {
+            color: #bbb;
+            font-size: 12px;
+            // align-content: flex-end;
+        }
+    }
+
+    .btn {
+        background-color: rgb(15, 156, 15);
+        border-style: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 10px;
+        text-transform: capitalize;
+        width: 100%;
+    }
+}
+
+
+
+

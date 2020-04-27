@@ -1,0 +1,31 @@
+{% form_theme listAddressesForm 'MdmOrderBundle:Form:list_addresses_fields.html.twig' %}
+
+{# form select addresses #}
+<div class="select-address-form">
+        <div class="address-list-container js-address-list-container">
+            <h3 class="section-title">
+                {{ 'delivery_form.delivery_choice_select_address'|trans({}, 'form') }}
+            </h3>
+
+            {# List of flashbag message #}
+            {% include '@MdmOrder/Delivery/_partials/message_flashbag.html.twig' with {messageTypes : {error: 'adressFormError', success: 'adressFormSuccess'}, domain: 'form'}  %}
+
+            {{ form_start(listAddressesForm) }}
+                {{ form_widget(listAddressesForm.shippingAddresses, {
+                    'attr': {
+                        'class': 'cs-select cs-skin-border address-list select',
+                        'custom_placeholder': 'delivery_form.address_book'|trans({}, 'form')
+                    }
+                }) }}
+            {{ form_end(listAddressesForm) }}
+
+            <div class="btn-container-edit row" id="js-btn-container-edit">
+                <div class="col-sm-6 btn-container-modify">
+                    <a {{ track_event('order.delivery.edit.address') }} href="#" class="btn btn-lg btn-form--modify" id="js-update-address">{{ 'delivery_form.address_edit'|trans({'%hide_for_mob_begin%': '<span class=\'hidden-xs\'>', '%hide_for_mob_end%': '</span>'}, 'form')|raw }}</a>
+                </div>
+                <div class="col-sm-6 btn-container-create">
+                    <a {{ track_event('order.delivery.new.address') }} href="#" class="btn btn-lg btn-form--create" id="js-create-address" data-address-type="{{ constant('Mdm\\Services\\User\\Model\\Address\\Address::TYPE_SHIPPING') }}">{{ 'delivery_form.address_create'|trans({'%hide_for_mob_begin%': '<span class=\'hidden-xs\'>', '%hide_for_mob_end%': '</span>'}, 'form')|raw }}</a>
+                </div>
+           </div>
+        </div>
+</div>

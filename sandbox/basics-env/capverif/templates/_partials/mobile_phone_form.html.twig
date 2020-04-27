@@ -1,0 +1,14 @@
+<div class="mobile-phone-container js-mobile-phone-container row">
+    <p class="msg-modifier msg-modifier--warning">
+        <span class="msg-modifier__child picto-container">&nbsp;</span>
+        <span class="msg-modifier__child msg-modifier-text">{{ 'delivery_form.mobile_phone.info'|trans({}, 'form') }}</span>
+    </p>
+
+    <div class="mobile-phone-field-container clearfix">
+        <p class="fields-content row">
+            <input type="tel" id="mobile-phone" name="mobilePhone" required="required" custom_placeholder="{{ 'delivery_form.mobile_phone.label'|trans({}, 'form') }}" class="input col-xs-12 col-sm-7 js-mobile-phone" autocomplete="off" value="{{ mobilePhone }}">
+            <label for="mobile-phone" class="label">{{ 'delivery_form.mobile_phone.label'|trans({}, 'form') }}</label>
+            <span class="error-msg js-mobile-phone-error"></span>
+        </p>
+    </div>
+</div>

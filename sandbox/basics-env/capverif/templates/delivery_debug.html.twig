@@ -1,0 +1,72 @@
+{% extends 'MdmOrderBundle:Layouts:layout.html.twig' %}
+
+{% block content %}
+    <style type="text/css">
+        h2 {
+            font-size: 43px;
+            color: #a94442;
+        }
+        .alert-error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .btn-primary, .btn-primary:hover {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        ul {
+            padding: 0 15px;
+        }
+        ul li {
+            list-style-type: disc;
+        }
+    </style>
+
+    <section class="content row">
+        <h2>Debug Mode</h2>
+        <div class="alert alert-error">
+            <p>{{ "Exception %s: \"%s\""|format(orderChainStatus.exception, orderChainStatus.message) }}</p>
+            <ul>
+            {% for key, param in orderChainStatus.errorParams %}
+                <li>{{ key }} : '{{ param }}'</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <a class="btn btn-primary" href="{{ redirectionUrl }}">Url de redirection</a>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playground</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/playgnd.css">
+</head>
+<body>
+<div id="app" class="bkg">
+    <div id="app">
+        <h2>Todos:</h2>
+        <button v-bind:disabled="isButtonDisabled">Click</button>
+    </div>
+</div>
+
+<div id="vfor-ex">
+    <ul class="bkg">
+        <li v-for="(item, index) in items">
+        {{ parentMessage }} - {{ index }} - {{ item.message }}
+        <!-- {{ items.push({ message: 'test'}) }} -->
+        </li>
+    </ul>
+
+    <!-- <button @click="muteArray">Mute</button> -->
+    <button @click="mutations.items.push({ test: 'toto'})">Mute</button>
+
+    <div class="bkg">
+        <p> {{ items }} </p>
+    </div>
+</div>
+
+<script src="js/playgnd.js"></script>
+</body>
+</html>

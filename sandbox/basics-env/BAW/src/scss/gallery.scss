@@ -1,0 +1,77 @@
+.btn {
+    background-color: #fcad26;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 6px #efa424;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    // margin: 0 auto;
+    outline: none;
+    padding: 20px 30px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100px;
+
+    &:hover {
+        box-shadow: 0 4px #efa424;
+        top: 2px;
+    }
+
+    &:active {
+        box-shadow: none;
+        top: 6px;
+    }
+}
+
+.section-one {
+    .item {
+        display: inline-block;
+        position: relative;
+        width: 33%;
+
+        &:hover {
+            .pic {
+                opacity: 0.5;
+            }
+
+            .icon {
+                transform: rotate(45deg) scale(1.2);
+            }
+        }
+
+        &.blue {
+            background-color:blue;
+            margin: 0 0.5%;
+        }
+
+        &.green {
+            background-color:green;
+        }
+
+        &.red {
+            background-color:red;
+        }
+
+        .pic {
+            max-width: 100%;
+        }
+
+        .icon {
+            left: 35%;
+            position: absolute;
+            top: 35%;
+            transition: transform 1s ease-in-out;
+            z-index: 1;
+        }
+    }
+}
+
+
+
+

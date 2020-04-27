@@ -1,0 +1,107 @@
+.first {
+    margin-bottom: 50px;
+    padding: 10px;
+}
+
+.sidebar {
+    background-color: midnightblue;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 200px;
+    width: 150px;
+}
+
+.item {
+    padding-bottom: 6px;
+}
+
+.numbers {
+    .third &, .fourth & {
+        margin-top: 30px;
+    }
+
+    .container {
+        border: 8px solid gray;
+
+        .box {
+            color: #ccc;
+            font-size: 50px;
+            padding: 10px;
+            // width: 500px;
+        }
+
+        .box-B {
+            color: #ccc;
+            font-size: 50px;
+            padding: 10px;
+        }
+
+        .one, .six {background-color: red;}
+        .two, .seven {background-color: orangered;}
+        .three, .height {background-color: orange; font-size: 60px;}
+        .four, .nine {background-color: pink;}
+        .five, .ten {background-color: yellow; font-size: 30px;}
+        .eleven {background-color: yellow; font-size: 75px;}
+        .twelve {background-color: cornflowerblue;}
+        .thirteen {background-color: cadetblue;  font-size: 80px;}
+    }
+
+    .container {
+        .second & {
+        /* "Flex display" Specify that's a flex container */
+        display: flex;
+        /* "flex-direction" allow to use multi line or not (if not enought space in container)*/
+        flex-direction: row; //row,row-reverse ; column,column-reverse
+        /* flex-wrap: wrap; */ //wrap, wrap-reverse, nowrap
+        /* "justify-content" specify distribution of space in flex container ALONG THE MAIN AXIS */
+        justify-content: space-between; //flex-end, center, space-between, space-around
+        }
+
+        .third & { //.third container
+            display: flex;
+            flex-direction: row;
+            height: 60vh;
+            width: 55vw;
+            flex-direction: column-reverse;
+            flex-wrap: wrap;
+            justify-content: center;
+            /* "align-items" define space distribution between items in flex container ALONG the CROSS AXIS */
+            // align-items: center; //flex-start, flex-end, stretch, center, baseline
+            /* "align-content" define space distribution between rows in flex container ALONG the CROSS AXIS */
+            align-content: center; //stretch, flex-start, flex-end, space-between, space-around, center
+        }
+
+        .fourth & {
+            display: flex;
+            align-items: flex-start;
+
+            .box {
+                /* "flex-basis" define the ideal size (width/row or height/column) for item */
+                flex-basis: 50px;
+                /* "flex-grow" define the ratio used to share the unused space (space free) in the container */
+                // flex-grow: 1;
+                /* "flex-shrink" define the way to manage items if not enough space in the container */
+                flex-shrink: 0; // Set to 0 = Never shrink
+                /* shorthand syntax : grow shrink basis */
+                // flex: 0 0 200px;
+            }
+
+            .box-2 {
+                /* Override container's align-items for an individual element */
+                align-self: flex-end;
+                /* Specify the order used to lay out items in their flex container */
+                /* All items have a value zero so negative goes to left and positive goes to right */
+                order: 2;
+            }
+            .box-3 {
+                order: 4;
+            }
+            .box-4 {
+                order: 1;
+            }
+        }
+    }
+}

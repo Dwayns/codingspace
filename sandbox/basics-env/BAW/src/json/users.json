@@ -1,0 +1,21 @@
+{
+    "user": [
+        {
+            "gender": "female",
+            "name": {
+                "title": "Ms.",
+                "first": "Amanda",
+                "last": "Chaka"
+            },
+            "username": "King of Wakanda",
+            "city": "Wakanda",
+            "email": "waka@waka.ka",
+            "id": "001",
+            "picture": {
+                "small": "",
+                "medium": "",
+                "large": ""
+            }
+        }
+    ]
+}

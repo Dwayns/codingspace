@@ -1,0 +1,11 @@
+{# row succes/errors msg #}
+<div class="row">
+    {% for type, messageKey in messageTypes %}
+        {% for message in app.session.flashbag.get(messageKey) %}
+            <p class="msg-modifier msg-modifier--{{ type }} js-{{ type }} js-msg-modifier">
+                <span class="msg-modifier__child picto-container">&nbsp;</span>
+                <span class="msg-modifier__child msg-modifier-text">{{ message }}</span>
+            </p>
+        {% endfor %}
+    {% endfor %}
+</div>

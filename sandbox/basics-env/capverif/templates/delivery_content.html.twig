@@ -1,0 +1,228 @@
+{# .container parent row #}
+{# begin content #}
+<div class="delivery_content js-delivery_content row">
+    <section class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1 content-col--left">
+
+        {# recap infos command #}
+        <div class="delivery-recap">
+            {# List of flashbag message #}
+            {% include '@MdmOrder/Delivery/_partials/message_flashbag.html.twig' with {'messageTypes' :  {notice: 'deliveryNotice', warning: 'deliveryWarning'} , 'domain': 'delivery' } %}
+
+            {# infos product/delay delivery #}
+            <div class="row">
+                <h1 class="section-title col-sm-12 no-gutters">
+                    {{ 'delivery.delivery_title'|trans({}, 'delivery') }}
+                </h1>
+            </div>
+            {% set groupCount = order.getGroups|length %}
+            {% set dateSplittable = false %}
+            {% set wasSplitted = false %}
+            {% for groupKey, group in order.getGroups %}
+                {# infos command content #}
+                {% include 'MdmOrderBundle:Delivery:order_group.html.twig' %}
+                {% set dateSplittable = dateSplittable or group.dateSplittable %}
+                {% set wasSplitted = wasSplitted or group.wasSplitted %}
+            {% endfor %}
+            {% if dateSplittable or wasSplitted %}
+                {% include 'MdmOrderBundle:Delivery:date_split_options.html.twig' %}
+            {% endif %}
+        </div>
+
+        <div class="delivery-mode row">
+            <h1 class="section-title">
+                {{ 'delivery_form.delivery_choice_address'|trans({}, 'form') }}
+            </h1>
+
+            {# delivery mode list #}
+            <ul class="delivery-choice-list">
+                {% for carrier in carrierList %}
+                    {% set track_labels = carrierTrackingLabel(carrier) %}
+                    {% set trans_labels = carrierTranslationLabel(carrier) %}
+                    <li class="delivery-choice-list__item">
+                        <div {{ track_event(track_labels.delivery) }} class="delivery-choice js-delivery-choice {% if carrier.isDisabled %} disabled {% endif %}">
+                            <input
+                                class="delivery-choice__entry js-delivery-choice-entry"
+                                id="delivery-choice-{{ carrier.id }}"
+                                name="delivery-choice-entry"
+                                value=""
+                                type="radio"
+                                data-carrier-id="{{ carrier.id }}"
+                                {% if carrier.selected %} checked="checked" {% endif %}
+                                {% if trans_labels.link is defined %}data-href="{{ url(trans_labels.link.href, trans_labels.link.params) }}"{% endif %}
+                            >
+
+                            <label for="delivery-choice-home" class="check-input">
+                                <i class="icon-item input-bullet bullet-empty">
+                                    <svg role="img" class="icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-bullet-empty"></use>
+                                    </svg>
+                                </i>
+                                <i class="icon-item input-bullet bullet-full">
+                                    <svg role="img" class="icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-bullet-full"></use>
+                                    </svg>
+                                </i>
+                            </label>
+
+                            <p class="delivery-choice__info delivery-choice__info--title">
+                                <span class="hidden-xs visible-sm-up" >{{ trans_labels.nameDesktop| trans({}, 'delivery') }}</span>
+                                <span class="visible-xs" >{{ trans_labels.nameMobile| trans({}, 'delivery') }}</span>
+                                {% if trans_labels.details1 or trans_labels.details2 %}
+                                    <span class="title-complement">
+                                        <em class="title-complement__desc hidden-xs visible-sm-up">{{ trans_labels.details1| trans({}, 'delivery') }}</em>
+                                        <em class="title-complement__desc visible-xs">{{ trans_labels.details2| trans({}, 'delivery') }}</em>
+                                    </span>
+                                {% endif %}
+                            </p>
+                            <span class="delivery-choice__info delivery-choice__info--price">
+                                {% if carrier.isPickUpInStore and carrier.deliveryfees == 0 %}
+                                    <em>{{ 'delivery.lgm.free_delivery'| trans({}, 'delivery')}}</em>
+                                {% elseif ((carrier.deliveryfees + carrier.goldDeliveryfees) == 0) %}
+                                    <em>{{ 'delivery.free_delivery.carrier'| trans({}, 'delivery')}}</em>
+                                {% else %}
+                                    {{ (carrier.deliveryfees + carrier.goldDeliveryfees)|mdm_format_currency(order.currency) }}
+                                {%  endif %}
+                            </span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {# begin delivery mode content #}
+            <article class="delivery-choice-content delivery-choice-content--home js-delivery-choice-content">
+                {# infos delivery address #}
+                <div class="forms-container js-forms-container">
+                    {{
+                        carrier_delivery_form({
+                            'order': order,
+                            'selectedCarrier': selectedCarrier,
+                            'listAddressesForm': listAddressesForm,
+                            'addressForm': addressForm,
+                            'deliveryPointId': deliveryPointId,
+                            'action': 'create',
+                            'shippingAddress': shippingAddress,
+                            'billingAddress': billingAddress,
+                            'mobilePhone': mobilePhone,
+                            'context': context
+                        })
+                    }}
+                </div>
+            </article>
+        </div>
+
+        <span class="only-save-shipping-address-info not-use" id="mdm_order_selected_shippingAddress_id" data-shippingAddress-id="{% if shippingAddress != null %}{{ shippingAddress.id }}{% endif %}"></span>
+
+        <div class="submit-container hidden-xs hide">
+            <div class="submit-content">
+                <a {{ track_event('order.delivery.valid') }} href="#" class="btn btn-lg btn-form--submit js-btn-form-validate">
+                    {{ 'delivery.submit_button'| trans({}, 'delivery') }}
+                </a>
+            </div>
+        </div>
+    </section>{# end .content-col-left #}
+
+    <section class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0 no-gutters content-col--right">
+       {# cart recap #}
+        <div class="cart-recap-wrapper" id="sticky-recap" data-spy="affix">
+            <div class="cart-recap-container">
+                <input id="cart-recap-expand" class="hide" name="cart-recap-expand" type="checkbox">
+                <div class="sticky-wrapper">
+                    <h1 class="section-title">
+                        {{ 'delivery.delivery_recap_title'|trans({}, 'delivery') }}
+                    </h1>
+
+                    <table class="cart-recap-content">
+                        <thead class="cart-recap-content__title">
+                            <tr>
+                                <th>{{ 'delivery.cart_resume_title'| trans({}, 'delivery') }}</th>
+                                <th>
+                                    <a {{ track_event('order.delivery.cart_recap_edit') }} href="{{ cartUrl }}" class="cart-modify js-cart-modify">{{ 'delivery.actions.modify'| trans({}, 'delivery') }}</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tfoot class="cart-recap-content__footer">
+                            <tr>
+                                <th>{{ 'delivery.cart_resume_total'| trans({}, 'delivery') }}</th>
+                                <th> {{ (orderPriceInfo.getTotalProductsAmount() + selectedCarrier.getTotalDeliveryFees(order))|mdm_format_currency(order.currency) }} </th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="mention">
+                                    {% if orderPriceInfo.getTotalEcoPartAmount() > 0 %}
+                                        {% set ecoPart = orderPriceInfo.getTotalEcoPartAmount()|mdm_format_currency(order.currency) %}
+                                        <span>{{ 'delivery.cart_resume_eco_part'| trans({'%amount%' : ecoPart}, 'delivery') }}</span>
+                                    {% endif %}
+                                </th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="cart-recap-content__body">
+                            <tr>
+                                <td>{{ 'delivery.cart_resume_sub_total'| trans({}, 'delivery') }}</td>
+                                <td> {{ (orderPriceInfo.getTotalProductsAmount())|mdm_format_currency(order.currency) }} </td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'delivery.cart_resume_delivery'| trans({}, 'delivery') }}</td>
+                                <td>
+                                    {% if selectedCarrier.isPickUpInStore %}
+                                        {{ 'delivery.lgm.free_delivery'| trans({}, 'delivery')}}
+                                    {% elseif selectedCarrier.getTotalDeliveryFees() > 0 %}
+                                        {{ (selectedCarrier.getTotalDeliveryFees())|mdm_format_currency(order.currency) }}
+                                    {% else %}
+                                        {{ 'delivery.free_delivery.recap'| trans({}, 'delivery') }}
+                                    {%  endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    {# submit form  #}
+                    <div class="submit-container row">
+                        <div class="submit-content">
+                            {% if appContext.isStore() %}
+                                <a href="#" class="btn btn-form--submit col-xs-8 col-sm-10 centered-xs centered-sm js-btn-form-validate" data-event-action="Valider" data-event-label="Livraison">
+                                    {{ 'delivery.submit_button'|trans({}, 'delivery') }}
+                                </a>
+                                <a href="{{ url('store.mdm_frontend_orders_cancel', {id: order.id}) }}" class="btn btn-form--modify col-xs-8 col-sm-10 centered-xs centered-sm" data-event-action="Abandonner" data-event-label="Livraison">
+                                    {{ 'delivery.cancel_button'|trans({}, 'delivery') }}
+                                </a>
+                                <p class="col-xs-8 col-sm-10 centered-xs centered-sm text-center">
+                                    <a href="{{ url('user.mdm_store_search_users', {market: market, language: language}) }}">
+                                        {{ 'delivery.change_customer'|trans({}, 'delivery') }}
+                                    </a>
+                                </p>
+                            {% else %}
+                                <a {{ track_event('order.delivery.valid') }} href="#" class="btn btn-lg btn-form--submit col-xs-10 col-md-12 centered-xs centered-sm js-btn-form-validate">
+                                    {{ 'delivery.submit_button'| trans({}, 'delivery') }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>{# end submit-container #}
+                </div>{# end sticky #}
+
+            </div>{# end cart-recap-container #}
+        </div>{# end cart-recap-wrapper #}
+    </section>{# end .content-col-right #}
+
+    {# BEGIN MODAL #}
+    <div class="modal-container">
+        <div class="modal-content">
+            <div class="modal-close-container">
+                <div class="close-modal-container row">
+                    <btn class="btn-close-modal col-xs-2 col-xs-offset-10 col-sm-1 col-sm-offset-11 no-gutters js-btn-close-modal">
+                        <i class="icon-item btn-close">
+                            <svg role="img" class="icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-close"></use>
+                            </svg>
+                        </i>
+                    </btn>
+                </div>
+            </div>
+            
+            {% include '@MdmOrder/Delivery/_modals/cap_adress_suggest.html.twig' %}
+            {{ delivery_point_carrier_map(selectedCarrier, shippingAddress, searchAddress) |raw }}
+        </div>
+    </div>
+    {# END MODAL #}
+</div>
+{% block tc_vars %}
+    {{ get_tc_var({'order': order}, appContext.isPrivateSales ? tc_private_sales_container_id : tc_default_container_id) }}
+{% endblock %}

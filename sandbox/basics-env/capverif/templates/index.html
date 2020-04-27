@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <h3 class="cufon-replace">&bull; LIVRAISON EN POINT RETRAIT MEUBLES</h3>
+        <div class="livraisonDelay"><h4>Délai de livraison</h4>
+            <p>En moyenne, vous êtes livrés dans les <strong>4 jours ouvrés</strong> pour les articles en stock.</p>
+        </div>
+        <div class="livraisonCond">
+            <h4>Conditions de livraison</h4>
+            <p>Vos articles sont livrés par Géodis dans <strong>le point retrait meuble de votre choix</strong>. Vous êtes informé de l’arrivée de votre commande par e-mail et disposez de XX jours ouvrables pour la récupérer sur présentation d’une pièce d’identité. Passé ce délai, votre colis nous sera automatiquement retourné. Attention : assurez-vous de venir accompagné pour retirer votre colis si celui-ci est volumineux.</p>
+        </div>
+        <div id="prm">
+            <div class="livraisonCond">
+                <h4>Contact des agences GEODIS </h4>
+                <p>Veuillez renseigner votre code postal pour connaître l'agence la plus proche de chez vous.</p>
+            </div>
+            <form action="search" class="search-form" id="search-form">
+                <input type="text" placeholder="code postal" class="field-txt" id="search-zipcode">
+                <input type="submit" class="search-btn" value="Rechercher">
+            </form>
+            <table border="0" cellspacing="0" cellpadding="0" class="carriers-table">
+                <tbody style="border: 1px solid #d2d2d2;">
+                    <!-- <tr>
+                        <td class="even"><strong>FRANCE EXPRESS AUXERRE</strong></td>
+                        <td class="even">ZI La Plaine des Isles<br/>BP 161<br/>89003 AUXERRE Cédex</td>
+                        <td class="even"><strong>03 86 94 29 29</strong></td>
+                        <td class="even">8h00/18h15 et le sam 8h00/11h30</td>
+                    </tr>
+                    <tr>
+                        <td class="odd"><strong>GEODIS BOURG EN BRESSE</strong></td>
+                        <td class="odd">399 Allée du Thioudet<br/>01960 PERONNAS</td>
+                        <td class="odd"><strong>04 74 32 16 96</strong></td>
+                        <td class="odd">lun ven 8h/18h00</td>
+                    </tr> -->
+                </tbody>
+            </table>
+            <a href="#" class="btn-all-carriers" id="btn-show-all">Voir plus d'agences</a>
+        </div>
+<!--  -->
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function(event) {
+        var deliveryPoints = [{"title":"GEODIS MARSEILLE","phone":"04 42 15 50 00","city":"VITROLLES","zip_code":"13127","address":"Voie d'Irlande","address2":"ZAC l'Anjoly"},{"title":"GEODIS MIRAMAS","phone":"04 90 73 27 79","city":"MIRAMAS","zip_code":"13140","address":"Avenue Vasco De Gama","address2":"Zone Clesud"},{"title":"GEODIS NIMES","phone":"04 66 02 14 14","city":"NIMES","zip_code":"30000","address":"691 Avenue Frédéric Bartholdi","address2":"Zac de Grézan"},{"title":"GEODIS TOULON","phone":"04 94 24 71 00","city":"TOULON","zip_code":"83080","address":"227 Avenue Joseph Louis LAMBOT","address2":"ZI Toulon EST"},{"title":"GEODIS AVIGNON","phone":"04 90 03 03 00","city":"LE PONTET","zip_code":"84130","address":"278 Rue des tonneliers","address2":"Parc de l'Oseraie EST"},{"title":"France Express DIGNE LES BAINS","phone":"04 92 68 07 08","city":"PEYRUIS","zip_code":"04310","address":"ZA du Mardaric","address2":""},{"title":"Transports DEVOLUY","phone":"04 92 52 51 51","city":"GAP","zip_code":"05000","address":"Rue des Silos","address2":""},{"title":"GEODIS NICE","phone":"04 92 00 46 06","city":"NICE","zip_code":"06300","address":"Gare St Roch","address2":""},{"title":"GEODIS MONTPELLIER","phone":"04 67 07 14 07","city":"ST JEAN DE VEDAS","zip_code":"34430","address":"Rue du Traité de Rome","address2":"PA LA PEYRIERE"},{"title":"GEODIS CARCASSONNE","phone":"04 68 25 90 44","city":"CARCASSONNE","zip_code":"11000","address":"80 Rue Philippe Lauth","address2":"Zone Lannolier 1"},{"title":"GEODIS NARBONNE","phone":"04 68 42 37 00","city":"NARBONNE","zip_code":"11100","address":"Zone Industrielle croix sud","address2":"BAT SUD TRANSIT"},{"title":"GEODIS PERPIGNAN","phone":"04 68 56 29 00","city":"PERPIGNAN","zip_code":"66000","address":"Rue de Turin","address2":"ZAC Grand St Charles"},{"title":"CORSE SUD EXPRESS","phone":"04 95 23 03 07","city":"SARROLA CARCOPINO","zip_code":"20167","address":"Lieu dit Trenta Costa","address2":"Baleone"},{"title":"ERSA","phone":"04 95 30 39 51","city":"SALTATOJO FURIANI","zip_code":"20600","address":"RN 193 Furiani","address2":null},{"title":"GEODIS BREST","phone":"02 98 30 58 58","city":"GUIPAVAS","zip_code":"29490","address":"370 Rue Jacqueline Auriol","address2":"ZAC de St Thudon"},{"title":"GEODIS QUIMPER","phone":"02 98 52 87 87","city":"QUIMPER","zip_code":"29000","address":"21 Rue Albert Stephan","address2":"ZI du Petit Guelen"},{"title":"GEODIS SAINT BRIEUC","phone":"02 96 62 20 00","city":"ST BRIEUC","zip_code":"22000","address":"7 Rue Niepce","address2":null},{"title":"GEODIS LORIENT","phone":"02 97 76 84 84","city":"CAUDAN","zip_code":"56850","address":"Rue Joseph Bigot","address2":"ZI Lann Sevelin"},{"title":"GEODIS VANNES","phone":"02 97 01 01 08","city":"VANNES","zip_code":"56000","address":"Rue Gontran Bienvenu","address2":"ZI du Prat"},{"title":"GEODIS RENNES","phone":"02 99 26 46 00","city":"CESSON SEVIGNE","zip_code":"35510","address":"Rue du Buisson","address2":"ZI Sud Est"},{"title":"NOYON FRANCE EXPRESS ST LO","phone":" 02.33.77.67.00","city":"AGNEAUX","zip_code":"50180","address":"633 Rue Barthélemy Thimonnier","address2":"ZA la Croix Carrée 2"},{"title":"NOYON CAEN","phone":"02 31 70 70 70","city":"MONDEVILLE","zip_code":"14120","address":"Avenue de l'Europe","address2":"ZA de la Vallee Barrey"},{"title":"GEODIS ALENCON","phone":"02 33 80 82 00","city":"ALENCON","zip_code":"61004","address":"Route d'Argentan  ZIN BP 130","address2":null},{"title":"NOYON FRANCE EXPRESS FLERS","phone":"02 33 64 64 33","city":"FLERS","zip_code":"61100","address":"Rue Thimonnier","address2":"Z.I. de la Cochère"},{"title":"GEODIS LAVAL","phone":"02 43 67 22 22","city":"BONCHAMP LES LAVAL","zip_code":"53960","address":"Rue des pierres","address2":"Zone Industrielle NORD"},{"title":"GEODIS LE MANS","phone":"02 43 78 43 78","city":"LE MANS","zip_code":"72000","address":"Rue Antoine Becquerel","address2":"ZI SUD"},{"title":"GEODIS NANTES","phone":"02 51 70 74 00","city":"ST AIGNAN GRANDLIEU ","zip_code":"44860","address":"Rue Santos Dumont","address2":"D2A Nantes Atlantique"},{"title":"GEODIS ROCHEFORT","phone":"05 46 82 12 00","city":"ROCHEFORT","zip_code":"17300","address":"11 Rue Hubert Pennevert","address2":"ZI des Soeurs EST"},{"title":"GEODIS TOURS","phone":"02 47 40 50 50","city":"PARCAY MESLAY","zip_code":"37210","address":"310 Rue Morane Saulnier","address2":"ZA Papillon"},{"title":"GEODIS BLOIS","phone":"02 54 50 44 44","city":"FOSSE","zip_code":"41330","address":"7 Rue du Clos Thomas","address2":"ZI Euro Val De Loire"},{"title":"GEODIS ORLEANS","phone":"02 38 70 90 60","city":"SARAN","zip_code":"45770","address":"Rue Jean Bertin","address2":null},{"title":"GEODIS CHOLET","phone":"02 41 75 36 36","city":"CHOLET","zip_code":"49300","address":"3 Boulevard Cassini","address2":null},{"title":"GEODIS ANGERS","phone":"02 41 76 44 44","city":"ST SYLVAIN D ANJOU","zip_code":"49480","address":"18 Avenue des carreaux","address2":null},{"title":"GEODIS NIORT","phone":"05 49 17 84 79","city":"LA CRECHE","zip_code":"79260","address":"ZI et d'activite de la Crèche","address2":null},{"title":"GEODIS LA ROCHE SUR YON","phone":"02 51 47 77 22","city":"LA ROCHE SUR YON","zip_code":"85000","address":"37 Rue de Dion Bouton","address2":"Z.I. des Ajoncs"},{"title":"GEODIS TOULOUSE","phone":"05 34 27 66 00","city":"FENOUILLET","zip_code":"31150","address":"80 avenue de Toulouse","address2":"Bruguieres"},{"title":"France Express RODEZ","phone":"05 65 78 12 12","city":"RODEZ","zip_code":"12000","address":"Avenue de Vabre","address2":"Bat Sud Transit"},{"title":"GEODIS AUCH","phone":"05 62 60 64 84","city":"AUCH","zip_code":"32000","address":"Rue grisons","address2":""},{"title":"GEODIS BORDEAUX","phone":"05 56 43 41 41","city":"BRUGES","zip_code":"33520","address":"Rue Robert Mathieu","address2":"ZI de fret de Bruges"},{"title":"GEODIS DAX","phone":"05 58 91 36 36","city":"ST PAUL LES DAX","zip_code":"40990","address":"225 Rue Philibert Delorme","address2":"Village d'entreprises"},{"title":"GEODIS AGEN ","phone":"05 53 69 24 00","city":"BOE","zip_code":"47550","address":"ZI de coupat","address2":null},{"title":"BMV PAU","phone":"05 59 13 00 00","city":"LONS","zip_code":"64140","address":"Zone induspal Avenue Ampere","address2":""},{"title":"BMV BAYONNE","phone":"05 59 31 55 00","city":"MOUGUERRE","zip_code":"64990","address":"Centre Europeen de fret","address2":"15 avenue Bordaberri"},{"title":"GEODIS TARBES","phone":"05 62 38 93 00","city":"SEMEAC","zip_code":"65600","address":"109 Avenue Francois Mitterand","address2":""},{"title":"GEODIS ALBI","phone":"05 63 53 77 81","city":"MARSSAC SUR TARNE","zip_code":"81150","address":"ZA de la Pelbousquié","address2":"Rue Louis Bleriot"},{"title":"GEODIS MONTAUBAN ","phone":"05 63 23 00 00","city":"MONTAUBAN","zip_code":"82000","address":"ZI Albasud secteur","address2":"2 Rue J Daguerre"},{"title":"GEODIS ANGOULEME","phone":"05 45 69 13 14","city":"ST YRIEIX SUR CHARENTE","zip_code":"16710","address":"Parc d'Activité Euratlantic","address2":"ZE de Villeseche"},{"title":"GEODIS BOURGES","phone":"02 48 68 80 80","city":"BOURGES","zip_code":"18025","address":"ZI d'Asnieres","address2":"29 Avenue de la prospective"},{"title":"GEODIS BRIVE LA GAILLARDE","phone":"05 55 88 94 00","city":"FENOUILLET","zip_code":"31150","address":"Centre logistique de la gare","address2":null},{"title":"GEODIS GUERET","phone":"05 55 52 06 81","city":"GUERET","zip_code":"23000","address":"ZI de Cher du Prat","address2":""},{"title":"GEODIS PERIGUEUX","phone":"05 53 35 53 53","city":"BOULAZAC","zip_code":"24750","address":"Avenue Ambroise Croizat","address2":""},{"title":"GEODIS CHATEAUROUX","phone":"02 54 08 16 16","city":"CHATEAUROUX","zip_code":"36008","address":"ZI Allée des maisons rouges","address2":""},{"title":"TRANSQUERCY CAHORS ","phone":"05 65 21 50 50","city":"LALBENQUE","zip_code":"46230","address":"Parc activité du Sycala","address2":null},{"title":"GEODIS POITIER","phone":"05 59 13 00 00","city":"DISSAY","zip_code":"86130","address":"Rue des érables","address2":"Jaunay Clan"},{"title":"GEODIS LIMOGES ","phone":"05 55 04 30 30","city":"LIMOGES","zip_code":"87000","address":"3, Rue Henri Giffard","address2":""},{"title":"CITRA","phone":"03 23 06 13 00","city":"ST QUENTIN","zip_code":"02100","address":"ZI Rouvroy Morcourt","address2":null},{"title":"GEODIS CHARLEVILLE MEZIERES","phone":"03 24 52 68 69","city":"TOURNES","zip_code":"08090","address":"Rue Maurice Perin","address2":"PA Ardennes Emeraude - Tournes"},{"title":"GEODIS TROYES","phone":"03 25 71 21 60","city":"LA CHAPELLE ST LUC","zip_code":"10600","address":"16 rue de la douane","address2":null},{"title":"GEODIS CHALONS EN CHAMPAGNE","phone":"03 26 69 44 44","city":"ST MARTIN SUR LE PRE","zip_code":"51520","address":"Rue Charles-Marie Ravel","address2":"Parc Industriel de Recy-St Martin"},{"title":"GEODIS REIMS","phone":"03 26 48 30 00","city":"REIMS","zip_code":"51100","address":"36, Boulevard du Val De Vesle","address2":"Parc Industriel Pompelle"},{"title":"IMANY","phone":"03 25 87 55 86","city":"LANGRES","zip_code":"52201","address":"ZAE de Vignoettes","address2":""},{"title":"GEODIS NANCY","phone":"03 83 15 65 65","city":"VILLE EN VERMOIS","zip_code":"54210","address":"8, rue de la Moussiere","address2":"ZA Les Moussieres"},{"title":"GEODIS VERDUN","phone":"03 29 80 55 55","city":"LES SOUHESMES RAMPONT","zip_code":"55220","address":"ZA Souhesmes","address2":null},{"title":"GEODIS METZ","phone":"03 87 73 52 52","city":"ENNERY","zip_code":"57365","address":"La Fontaine Des Saints","address2":null},{"title":"GEODIS STRASBOURG","phone":"03 88 34 60 01","city":"STRASBOURG","zip_code":"67000","address":"11 rue de Boulogne","address2":null},{"title":"TRANSCO","phone":"03 89 20 59 59","city":"COLMAR","zip_code":"68000","address":"19 rue André Kiener","address2":"ZI Nord"},{"title":"GEODIS LILLE EUROPE","phone":"03 20 08 55 55","city":"LOMME","zip_code":"59160","address":"7 Avenue de la Rotonde","address2":null},{"title":"GEODIS VALENCIENNES","phone":"03 27 09 20 00","city":"LA SENTINELLE","zip_code":"59174","address":"Rue Aime Cesaire","address2":"Parc  d'activité de l'aerodome Ouest"},{"title":"GEODIS LIEVIN","phone":"03 21 45 88 88","city":"LIEVIN","zip_code":"62800","address":"Rue Robert Fulton","address2":"Zone Quadraparc"},{"title":"GEODIS ABBEVILLE","phone":"03 22 60 23 45","city":"FEUQUIERES-EN-VIMEU","zip_code":"80210","address":"ZI rue du fonds de Saucourd","address2":null},{"title":"GEODIS AMIENS","phone":"03 22 54 90 00","city":"AMIENS","zip_code":"80000","address":"2 rue Henri Germaine Desjardins","address2":null},{"title":"GEODIS BOURG EN BRESSE","phone":"04 74 32 16 96","city":"PERONNAS","zip_code":"01960","address":"399 Allée du Thioudet","address2":""},{"title":"GEODIS OYONNAX","phone":"04 74 77 34 77","city":"OYONNAX","zip_code":"01100","address":"368 rue des Combalettes","address2":"ZI Ouest 2 Veyziat"},{"title":"Transports MOULINOIS","phone":"04 70 35 11 50","city":"YZEURE","zip_code":"03400","address":"13 Rue Jacques Coeur ","address2":"ZI"},{"title":"GEODIS VALENCE","phone":"04 75 57 50 50","city":"PORTES LES VALENCE","zip_code":"26800","address":"ZA Les Basseaux Sud Etoile Sur Rhon","address2":"180 rue de la Raye"},{"title":"CANTAL EXPRESS","phone":"04 71 63 55 83","city":"AURILLAC","zip_code":"15000","address":"6 Rue Gabriel Lacoste","address2":"Parc Activite de Tronquiere"},{"title":"GEODIS DIJON","phone":"03 80 58 74 00","city":"DIJON","zip_code":"21000","address":"4 Rue Bailly","address2":""},{"title":"BMV BESANCON","phone":"03 81 40 55 00","city":"BESANCON","zip_code":"25000","address":"Zone de transport","address2":"Espace Valentin"},{"title":"GEODIS GRENOBLE","phone":"04 76 56 54 54","city":"ST EGREVE","zip_code":"38120","address":"Activités Europe - La Grenobloise","address2":"7 Rue Fernand Forest"},{"title":"France EXPRESS CHAMPAGNOLE","phone":"03 84 53 11 00","city":"CHAMPAGNOLE","zip_code":"39300","address":"125 bis Avenue Edouard Herriot","address2":""},{"title":"GEODIS SAINT ETIENNE","phone":"04 77 43 35 00","city":"ST ETIENNE","zip_code":"42000","address":"4 Rue Denise Bastide","address2":"ZI du Bardot"},{"title":"Transports COGNARD","phone":"04 77 71 31 31","city":"RIORGES","zip_code":"42153","address":"ZI 557 rue Clément Ader","address2":""},{"title":"GEODIS LE PUY EN VELAY","phone":"04 71 02 72 55","city":"BLAVOZY","zip_code":"43700","address":"481 Avenue René Descartes","address2":"ZI"},{"title":"GEODIS MARVEJOLS","phone":"04 66 32 23 66","city":"MARVEJOLS","zip_code":"48100","address":"ZA Sainte Catherine","address2":"Avenue Meridienne"},{"title":"GEODIS NEVERS","phone":"03 86 59 32 44","city":"NEVERS","zip_code":"58000","address":"ZI St Eloi","address2":""},{"title":"GEODIS CLERMONT FERRAND","phone":"04 73 23 05 05","city":"GERZAT","zip_code":"63360","address":"Boulevard de L'Europe","address2":"Za Des Plantades"},{"title":"GEODIS GENAY","phone":"04 78 98 50 50","city":"GENAY","zip_code":"69730","address":"ZI Lyon Nord","address2":"175 Rue Jacquard"},{"title":"GEODIS VESOUL","phone":"03 84 97 18 50","city":"VESOUL","zip_code":"70000","address":"ZAAT Vesoul Ouest","address2":""},{"title":"BMV CHALON SUR SAONE","phone":"03 85 94 96 96","city":"ST MARCEL","zip_code":"71380","address":"31 Rue Louis Alphonse Poitevin","address2":""},{"title":"BMV MACON","phone":"03 85 34 47 71","city":"MACON","zip_code":"71000","address":"355 Rue Einstein","address2":""},{"title":"BMV ALBERTVILLE","phone":"04.79.39.03.90","city":"ALBERTVILLE","zip_code":"73200","address":"7 Rue du Lieutenant Eysseric","address2":"La Pierre au Roi"},{"title":"BMV CHAMBERY","phone":"04 79 96 38 38","city":"CHAMBERY","zip_code":"73000","address":"137 Rue Felix Esclangon","address2":""},{"title":"BMV  ANNEMASSE","phone":"04 50 37 06 49","city":"ANNEMASSE","zip_code":"74100","address":"24 Rue de Montreal Ville la Grand Z","address2":""},{"title":"BMV ANNECY","phone":"04 50 10 12 12","city":"PRINGY","zip_code":"74370","address":"100 Rue Des Merisiers","address2":"ZAC du Pre Vaurien"},{"title":"BMV AUXERRE","phone":"03 86 94 29 29","city":"AUXERRE","zip_code":"89000","address":"ZI Plaine des Isles","address2":""},{"title":"BMV SENS","phone":"03 86 83 87 00","city":"SENS","zip_code":"89100","address":"Rue des Champs Pluviers","address2":"ZI Vauguillettes"},{"title":"GEODIS EVREUX","phone":"02 32 62 21 62","city":"EVREUX","zip_code":"27000","address":"Rue Jean Monnet","address2":"ZAC Du Bois Des Communes"},{"title":"GEODIS CHARTRES","phone":"02 37 28 28 28","city":"GELLAINVILLE","zip_code":"28630","address":"Rue du Grand Séminaire","address2":"Le Coudray"},{"title":"GEODIS COMPIEGNE","phone":"03 44 91 73 00","city":"LE MEUX","zip_code":"60880","address":"Rue du Tourteret","address2":"ZI Armancourt Le Meux"},{"title":"GEODIS LE HAVRE","phone":"02 35 26 55 05","city":"ST VIGOR D'YMONVILLE","zip_code":"76430","address":"Parc du Hode","address2":"Voie des Hérons"},{"title":"GEODIS ROUEN","phone":"02 32 95 94 00","city":"ST ETIENNE DU ROUVRAY","zip_code":"76800","address":"Rue de l'Etang Delpech","address2":"Z.I. Est"},{"title":"GEODIS MARNE LA VALLEE","phone":"01 64 62 00 77","city":"COLLEGIEN","zip_code":"77090","address":"33 Allée du Clos des Charmes","address2":"P.A. Les Portes de la Fôret"},{"title":"GEODIS MELUN","phone":"01 64 10 41 91","city":"VAUX LE PENIL","zip_code":"77530","address":"495 avenue des Trois Tilleuls","address2":""},{"title":"GEODIS YVELINES","phone":"01 30 16 80 78","city":"TRAPPES","zip_code":"78190","address":"8 Rue Albert Einstein","address2":"Z.I. Trappes Elancourt"},{"title":"GEODIS ESSONNE","phone":"01 69 11 74 00","city":"LE PLESSIS PATE","zip_code":"91220","address":"ZAC de la Tremblaie","address2":"6 rue de la Mare à Blot"},{"title":"GEODIS HAUTS DE SEINE","phone":"01 71 05 40 10","city":"GENNEVILLIERS","zip_code":"92230","address":"50 Route Principale du Port","address2":""},{"title":"SD GEODIS VAL DE MARNE","phone":"01 56 70 47 00","city":"LIMEIL BREVANNES","zip_code":"94450","address":"Avenue Jean Monnet","address2":""},{"title":"GEODIS VAL D'OISE","phone":"01 34 40 44 44","city":"ST OUEN L AUMONE","zip_code":"95310","address":"3 Rue des Oziers","address2":"Parc d'activites du Vert Galant"},{"title":"GEODIS PARIS BERCY","phone":"01 44 68 74 00","city":"PARIS","zip_code":"75012","address":"20 RUE ESCOFFIER","address2":""}];
+
+        var searchForm = document.querySelector('#search-form');
+        var inputSearchValue = document.querySelector('#search-zipcode');
+        var showAllAgencies = document.querySelector('#btn-show-all');
+        var listTable = document.querySelector('.carriers-table');
+
+        function displayAgencies(agencyList) {
+          console.log('agencyList: ',agencyList);
+          // console.log('displayAgencies: ', agencyList.title);
+
+          // console.log('displayAgencies: ',agencyList.title, agencyList.address, agencyList.address2, agencyList.city, agencyList.zip_code, agencyList.phone);
+          
+          /* intTable += "<tr>" + "<td>" + element.title + "</td>" + "<td>" + element.address + "</td>" + "<td>" + element.address2 + "</td>" + "<td>" + element.city + "</td>" + "<td>" + element.zip_code + "</td>" + "<td>" + element.phone + "</td>" + "</tr>";
+
+          listTable.innerHTML = intTable; */
+        }
+
+        searchForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var zipCodeUser = inputSearchValue.value;
+
+          // var agencyFilter = deliveryPoints.filter( function(agency,index) { return agency.zip_code.substr(0,2) === zipCodeUser.substr(0,2) } );
+
+          var agencyFilter = deliveryPoints.filter( function(agency,index) { 
+              if(agency.zip_code.substr(0,2) === zipCodeUser.substr(0,2)) {
+                  console.log('agencyFilter: ',agency.title, agency.address, agency.address2, agency.city, agency.zip_code, agency.phone);
+                  console.log('Index: ',index);
+                  var result = agency;
+                  // console.log('RSULT: ',result);
+                  
+                  return result;
+              }
+          } );
+
+          /* var agencyFilter = console.log('IF: ', deliveryPoints.filter( function(agency,index) { 
+              if(agency.zip_code.substr(0,2) === zipCodeUser.substr(0,2)) {
+                  return [agency, index];
+              }
+          } )); */
+
+          console.log('Filter: ',agencyFilter);
+          // displayAgencies(agencyFilter)
+        }, false);
+
+        showAllAgencies.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        deliveryPoints.filter( function(agency) { return agency } );
+        console.log( deliveryPoints.filter( function(agency) { return agency } ) );
+        });
+
+        /*searchForm.addEventListener('submit', function(e) {
+            var zipCodeUser = inputSearchValue.value;
+            var intTable = '';
+            // var intTable;
+            e.preventDefault();
+
+            // deliveryPoints.filter( function(element) {
+            //     console.log('LOG : ',element.zip_code.substr(0,2) === zipCodeUser.substr(0,2));
+            //     return element.zip_code.substr(0,2) === zipCodeUser.substr(0,2); 
+            // });
+
+            function returnList(element) {
+              if(element.zip_code.substr(0,2) === zipCodeUser.substr(0,2)) {
+                console.log("if : ", intTable);
+
+                intTable += "<tr>" + "<td>" + element.title + "</td>" + "<td>" + element.address + "</td>" + "<td>" + element.address2 + "</td>" + "<td>" + element.city + "</td>" + "<td>" + element.zip_code + "</td>" + "<td>" + element.phone + "</td>" + "</tr>";
+                
+                console.log(element.title + element.address + element.address2 + element.city + element.zip_code + element.phone);
+              }
+
+              console.log("out : ", intTable);
+              if(typeof listTable !== "undefined") {
+                listTable.innerHTML = intTable;
+              }
+              
+              // return element.zip_code.substr(0,2) === zipCodeUser.substr(0,2);
+            }
+
+
+            deliveryPoints.filter(returnList);
+            // console.log(deliveryPoints.filter(returnList));
+            // console.log(deliveryPoints.filter(function(element) { return element.zip_code.substr(0,2) === zipCodeUser.substr(0,2) }));
+        }, false);
+
+        showAllAgencies.addEventListener('click', function(e) {
+            e.preventDefault();
+            deliveryPoints.forEach(function(element, index) {
+                // Create table here
+            });
+        });*/
+    });
+    
+</script>
+<!--  -->
+  </body>
+</html>

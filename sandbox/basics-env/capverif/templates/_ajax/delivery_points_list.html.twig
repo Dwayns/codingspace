@@ -1,0 +1,56 @@
+{% set tracking_labels = deliveryPointCarrierTrackLabel(carrierId) %}
+<ul class="relay-map-info-list-addresses-content">
+    {# BEGIN ADRESSE 1 #}
+    {% for dp in deliveryPoints %}
+        <li id="dp-{{ dp.id }}" class="relay-map-info-list-addresses address-{{ loop.index }} js-relay-map-info-list-addresses {% if dp.selected %} selected {% endif %}" data-dp-id="{{ dp.id }}" data-dp-type="{{ dp.type.name }}">
+            <div class="relay-addresses-content__address relay-addresses-content__address--map js-relay-addresses-content">
+                <p class="relay-addresses-content__address__dp-infos js-dp-infos {% if dp.selected %} current {% endif %} type-{{ dp.type.name |lower }}">
+                    <a {{ track_event(tracking_labels.edit, {'%number%': loop.index}) }} href="#" class="dp-infos__pointer js-dp-infos-pointer">
+                        <span class="pointer-number js-pointer-number">&nbsp;</span>
+                        <i class="svg-pointer icon-item"></i>
+                    </a>
+                    <span class="address-content">
+                        <strong {{ track_event(tracking_labels.edit, {'%number%': loop.index}) }} class="dp-infos-title js-dp-infos-title">{{ dp.title }}</strong>
+                        <br/>
+                        {{ dp.address is not empty ? dp.address }}<br />
+                        {% if dp.address2 %} {{ dp.address2 }} <br />{% endif %}
+                        {% if dp.addressComplement is not empty %}{{ dp.addressComplement }}<br /> {% endif %}
+                        {{ dp.zipCode }} {{ dp.city }}
+                        <br/>
+                        <i class="dp-infos-dist">{{ dp.dist|round(1, 'floor') }} km</i>
+                    </span>
+                </p>
+
+                <table class="relay-addresses-content__address__schedule js-relay-addresses-container">
+                    <thead class="relay-addresses-content__address__schedule__head">
+                    <tr>
+                        <th colspan="2">
+                            <a {{ track_event('order.delivery.delivery_point_schedules_state') }} href="#" class="schedule-content-title js-schedule-content-title"> {{ 'delivery_form.see_schedules'|trans({}, 'form') }} </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="relay-addresses-content__address__schedule__body js-schedule-content-body">
+                    {% for s in dp.schedules %}
+                        <tr>
+                            <td class="table-schedule-col1">{{ ('delivery_form.delivery_choice_day_'~loop.index)|trans({}, 'form') }}</td>
+                            {% if not s.is_closed %}
+                                <td class="table-schedule-col2">
+                                    {{ s.first_start_time|date('H:i') }} - {{ s.first_close_time|date('H:i') }}
+                                    {% if s.second_start_time is defined and s.second_close_time is defined %}  <span class="second-hours">{{ s.second_start_time|date('H:i') }} - {{ s.second_close_time|date('H:i') }}</span> {% endif %}
+                                </td>
+                            {% else %}
+                                <td class="table-schedule-col2">{{ 'delivery_form.delivery_point_is_closed'|trans({}, 'form') }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="relay-btn-container row">
+                <input {{ track_event(tracking_labels.chose, {'%number%': loop.index}) }} type="submit" value="{{ 'delivery_form.choose'|trans({}, 'form') }}" class="btn btn-lg btn-form--choose col-xs-6 col-lg-12 centered-xs js-btn-form-choose" id="" data-dp-id="{{ dp.id }}">
+            </div>
+        </li>
+    {% endfor %}
+    {# END ADRESSE 1 #}
+</ul>

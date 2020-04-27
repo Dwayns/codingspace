@@ -1,0 +1,72 @@
+{% set orderGroupSelectedCarrier = group.getSelectedCarrier %}
+<ul class="bl-info-container">
+        <li class="bl-info-item bl-info-item--{{ loop.index }} js-bl-info-item">
+            {# delay delivery infos #}
+            <div class="bl-info-item__recap row">
+                <input id="bl-pan-{{ loop.index }}" class="hide" name="bl-{{ loop.index }}" type="checkbox" />
+
+                <div class="recap-content recap-content-title col-xs-10 col-sm-8 no-gutters">
+                    <label {{ track_event('order.delivery.more_infos') }} class="recap-title js-recap-title title-block js-toogle-infos" for="bl-pan-{{ loop.index }}">
+                        <h1 class='section-title'>
+                            {% set groupNumber = groupCount > 1 ? (groupKey+1) ~'/'~ groupCount : '' %}
+                            {{ carrierTranslationLabel(orderGroupSelectedCarrier).info| trans({'%groupNumber%' : groupNumber}, 'delivery') }}
+                            <span class='small-text hidden-xs'>-</span>
+                            <span class='small-text text-color'>{{ formatDelivery(group, orderGroupSelectedCarrier) }}</span>
+                        </h1>
+                    </label>
+                </div>
+                <div class="recap-content recap-content-more-info col-xs-2 col-sm-4 no-gutters" data-event-action="Clic_infos" data-event-label="Transporteur">
+                    <label {{ track_event('order.delivery.more_infos') }} class="recap-more-info js-recap-more-info title-block js-toogle-infos" for="bl-pan-{{ loop.index }}">
+                        <span class="delivery-infos delivery-infos--more js-more-infos hidden-xs"> {{ 'delivery.more_informations'| trans({}, 'delivery') }} </span>
+                        <span class="delivery-infos delivery-infos--less js-less-infos hidden-xs switch-off"> {{ 'delivery.less_informations'| trans({}, 'delivery') }} </span>
+                        <span class="delivery-infos delivery-infos--picto-more">&nbsp;</span>
+                    </label>
+                </div>
+
+                <div class="wrapper-recap-details">
+                    <p class="recap-details">
+                        {% autoescape false %}
+                            {% spaceless %}
+                                <span>
+                                {% if orderGroupSelectedCarrier.confirmation_title is defined and orderGroupSelectedCarrier.confirmation_title %}
+                                    {{ orderGroupSelectedCarrier.confirmation_title ~ '\n'|nl2br }}
+                                {% endif %}
+                                {% if orderGroupSelectedCarrier.confirmation is defined and orderGroupSelectedCarrier.confirmation %}
+                                    {{ orderGroupSelectedCarrier.confirmation ~ '\n'|nl2br }}
+                                {% endif %}
+                                {% if orderGroupSelectedCarrier.confirmation_carrier_info is defined %}
+                                    {{ orderGroupSelectedCarrier.confirmation_carrier_info }}
+                                {% endif %}
+                            </span>
+                            {% endspaceless %}
+                        {% endautoescape %}
+                    </p>
+
+                    {% if free_shipping_display_eligible(orderGroupSelectedCarrier) %}
+                        {% if group.hasFreeShippingForAllProduct %}
+                            <span class="free-shipping-msg display-tracking">
+                                {{ 'delivery.free_shipping_msg.all'| trans({}, 'delivery') }}
+                            </span>
+                        {% elseif orderGroupSelectedCarrier.deliveryfees != 0 and group.hasFreeShippingProduct %}
+                            <span class="free-shipping-msg display-tracking">
+                                {{ 'delivery.free_shipping_msg.some'| trans({}, 'delivery') }}
+                            </span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% if group.isMLPOnly and isGuaranteedDeliveryEnabled() %}
+                <div class="msg-guaranteed-delivery row">
+                    <span class="msg-label">
+                        {{ 'delivery.msg_guaranteed_delivery_1'| trans({}, 'delivery') }}
+                    </span>
+                    <span class="msg-value">
+                        {{ 'delivery.msg_guaranteed_delivery_2'| trans({}, 'delivery') }}
+                    </span>
+                </div>
+            {% endif %}
+
+            {# product infos #}
+            {% include 'MdmOrderBundle:Delivery:product_list.html.twig' %}
+        </li>
+</ul>

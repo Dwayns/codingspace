@@ -1,0 +1,28 @@
+{% set trans_labels = deliveryPointCarrierTransLabel(selectedCarrier.id) %}
+{% set tracking_labels = deliveryPointCarrierTrackLabel(selectedCarrier.id) %}
+{# FORM SEARCH-ADRESS #}
+<div class="unregistered-customer-container">
+    <h3 class="section-title">
+        {{ trans_labels.search_title| trans({}, 'delivery') }}
+    </h3>
+
+    <div class="search-address-error-wrapper">
+        <p class="msg-modifier hide js-search-address-error msg-modifier--error">
+            <span class="msg-modifier__child picto-container">&nbsp;</span>
+            <span class="msg-modifier__child msg-modifier-text">{{ 'delivery.maps.errors.search_adress'| trans({}, 'delivery') }}</span>
+        </p>
+    </div>
+
+    <form action="#" method="post" class="row search-address-form js-dp-search-address-form">
+        <p class="fields-content col-xs-12 col-sm-8">
+            <input type="search" id="address" name="search-address" required class="address optional input search-address-form__text js-dp-search-address" autocomplete="off" value="">
+            <label for="address" class="label">{{ 'delivery_form.placeholders.address'| trans({}, 'form') }}</label>
+            <span class="btn-erase js-erase-search-address visible-xs">&#10005;</span>
+        </p>
+        <div class="col-sm-4 pad-right text-center">
+            <input {{ track_event(tracking_labels.search) }} type="submit" value="{{ 'delivery.find_relay.search'| trans({}, 'delivery') }}" class="btn btn-lg btn-form--choose js-btn-search-address">
+        </div>
+    </form>
+
+    {% include '@MdmOrder/Delivery/_partials/my_geolocation.html.twig' with {'geolocation_trad': 'delivery.find_relay.geolocation'} %}
+</div>

@@ -1,0 +1,19 @@
+<ul class="bl-product-list row">
+    {% for line in group.getLines if not line.isShippingFee %}
+        {% set lotQuantity = null != line.lotQuantity ? line.lotQuantity : 1 %}
+        {% set quantity = null != line.quantity ? line.quantity : 1 %}
+        {% set qt = lotQuantity * quantity %}
+        {# begin product item #}
+        <li class="bl-product-list__item bl-product-list__item--{{ loop.index }} text-center col-xs-4 col-sm-2 col-md-2">
+            <figure class="product-wrapper" role="group">
+                {% if free_shipping_display_eligible(selectedCarrier) and is_order_line_free_shipping(group, line, orderGroupSelectedCarrier) %}
+                    <figcaption class="free-shipping-picto icon-picto-free-shipping">&nbsp;</figcaption>
+                {% endif %}
+                <figure class="product-desc thumbnail">
+                    <img src="{{ get_product_image_url(line.mdmReference, line.product_image, 100, 100) }}" alt="{{ line.product_id }}">
+                    <figcaption class="product-desc__qty">{{ 'x' ~ qt }}</figcaption>
+                </figure>
+            </figure>
+        </li>{# end product item #}
+    {% endfor %}
+</ul>

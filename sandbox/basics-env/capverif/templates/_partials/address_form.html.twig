@@ -1,0 +1,151 @@
+{% form_theme form 'MdmOrderBundle:Form:fields.html.twig' %}
+
+{% trans_default_domain "form" %}
+
+{% if action == 'create' %}
+	{% set deliveryText = 'delivery_form.create_delivery_address_label'|trans({}, 'form') %}
+	{% set billingText = 'delivery.address.billing.create'|trans({}, 'delivery') %}
+	<h3 class="section-title centered-md{% if shippingAddress is defined and shippingAddress is null %} unregistered-customer{% endif %}"
+		data-delivery="{{ deliveryText }}"
+		data-billing="{{ billingText }}">
+        {% if form.vars.value.type == constant('Mdm\\Services\\User\\Model\\Address\\Address::TYPE_SHIPPING') %}
+            {{ deliveryText }}
+        {% else %}
+            {{ billingText }}
+        {% endif %}
+	</h3>
+{% endif %}
+
+{# form addresses #}
+<div class="order-form">
+	<form action="#" method="post" class="form form--address js-form-address js-capForm" autocomplete="off" novalidate>
+		{# row civility #}
+		<div class="row">
+			<div class="pad-left col-sm-6">
+				{{ form_widget(form.civility, { 'id': 'civility', 'attr': {'custom_placeholder': 'delivery_form.civ'|trans, 'class': 'select'} }) }}
+			</div>
+		</div>
+
+		{# begin row last/first name #}
+        <div class="row">
+			<div class="pad-left col-sm-6">
+				<p class="fields-content">
+					{{ form_widget(form.firstname, { 'id': 'firstname', 'attr': {'custom_placeholder': 'delivery_form.firstname'|trans } }) }}
+				</p>
+			</div>
+
+			<div class="pad-right col-sm-6">
+				<p class="fields-content">
+					{{ form_widget(form.lastname, { 'id': 'lastname', 'attr': {'custom_placeholder': 'delivery_form.lastname'|trans } }) }}
+				</p>
+			</div>
+		</div>
+
+		{# begin row tel/country #}
+        <div class="row">
+			<div class="pad-left col-sm-6">
+				<p class="fields-content">
+					{{ form_widget(form.phoneNumber, { 'id': 'phone', 'type':'tel', 'attr': {'custom_placeholder': 'delivery_form.phone_number'|trans, 'class': 'js-phonenumber' } }) }}
+				</p>
+			</div>
+
+			<div class="country-select-box pad-right col-sm-6">
+				{{ form_widget(form.country, { 'id': 'js-country', 'attr': {'custom_placeholder': 'delivery_form.country'|trans, 'class': 'select select-country js-country' } }) }}
+			</div>
+		</div>
+
+		{# begin row zipcode/city #}
+        <div class="row">
+			<div class="pad-left col-sm-6">
+				<p class="fields-content">
+					{{ form_widget(form.zipCode, { 'id': 'zipcode', 'attr': {'custom_placeholder': 'delivery_form.zip'|trans, 'class' : ' js-cap-zipcode' } }) }}
+				</p>
+			</div>
+
+			<div class="pad-right col-sm-6">
+				<p class="fields-content">
+					{{ form_widget(form.city, { 'id': 'city', 'attr': {'custom_placeholder': 'delivery_form.city'|trans, 'class':'city  js-cap-city'} }) }}
+					<a href="#" class="edit-city-address js-edit-city">{{ 'delivery.actions.modify'| trans({}, 'delivery') }}</a>
+				</p>
+			</div>
+		</div>
+
+		{# begin row address/complement #}
+        <div class="row">
+			<div class="pad-left col-sm-8">
+				<p class="fields-content">
+					{{ form_widget(form.address, { 'id': 'address', 'attr': {'custom_placeholder': 'delivery_form.address'|trans, 'class':'address optional' } }) }}
+				</p>
+			</div>
+
+			<div class="pad-right col-sm-4">
+				<p class="fields-content">
+					{{ form_widget(form.address2, { 'id': 'cplmt-address', 'attr': {'custom_placeholder': 'delivery_form.address2'|trans, 'class':'optional' } }) }}
+				</p>
+			</div>
+		</div>
+
+		{# begin row complementary infos #}
+        <div class="row">
+            <div class="inf-comp-container js-inf-comp-container col-sm-12">
+                <input id="inf-comp" class="hide " name="bl-1" type="checkbox" />
+                <label {% if action == 'create' %}{{ track_event('order.delivery.new.more_infos_company') }}{% else %}{{ track_event('order.delivery.edit.more_infos_company') }}{% endif %}class="inf-comp-title js-inf-comp-title " for="inf-comp">{{ 'delivery_form.add_info_title'|trans|raw }}</label>
+                <div class="inf-comp-content {% if form.taxCode is defined and form.taxCode.vars.errors|length %} error{% endif %}">
+                    {% if form.taxCode is defined %}
+                        {# begin row tacCode #}
+                        <div class="col-sm-6 no-gutters">
+                            <p class="fields-content">
+                                {{ form_widget(form.taxCode, { 'id': 'taxCode', 'attr': {'custom_placeholder': 'delivery_form.taxCode'|trans, 'class': 'taxCode'} }) }}
+                            </p>
+                        </div>
+                    {% endif %}
+
+                    <div class="col-sm-6 no-gutters">
+                        <p class="fields-content">
+                            {{ form_widget(form.companyName, { 'id': 'society', 'attr': {'custom_placeholder': 'delivery_form.company'|trans, 'class':'optional' } }) }}
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12 no-gutters">
+                        <p class="fields-content">
+                            {{ form_widget(form.comment, { 'id': 'msg-info-cmplt', 'attr': {'custom_placeholder': 'delivery_form.carrier_info'|trans, 'class': 'optional textarea' } }) }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		{# begin row mention #}
+        <span class="mentions">{{ 'delivery_form.required_fields'|trans }}</span>
+
+		{# begin row cta #}
+        <div class="row">
+			{% set show_cancel = show_cancel|default((shippingAddress is defined and shippingAddress != null) or action != 'create') %}
+			<input type="hidden" name="show_cancel" id="show_cancel" value="{{ show_cancel }}">
+			{% if show_cancel %}
+                <div class="col-xs-6 btn-container--cancel">
+				    <input {% if action == 'create' %}{{ track_event('order.delivery.new.cancel_address') }}{% else %}{{ track_event('order.delivery.edit.cancel_address') }}{% endif %} type="button" value="{{ 'delivery_form.cancel_delivery_address'|trans }}" class="btn btn-lg btn-form--cancel  js-btn-form-cancel" />
+                </div>
+			{% endif %}
+			{% if action == 'create' %}
+				{% if form.type.vars.value == constant('Mdm\\Component\\Address\\DomainObject\\Address::TYPE_SHIPPING')%}
+					{% set tracking_create_label = 'order.delivery.shipping.new.valid_address' %}
+				{% else %}
+					{% set tracking_create_label = 'order.delivery.billing.new.valid_address' %}
+				{% endif %}
+
+				{% if show_cancel %}
+					<div class="col-xs-6 btn-container--save js-btn-modifier-save{% if not show_cancel %} text-center{% endif %}">
+						<input {{ track_event(tracking_create_label) }} type="submit" value="{{ 'delivery_form.create_delivery_address'|trans }}" class="btn btn-lg btn-form--create js-btn-form-save" id="create-address-btn" />
+					</div>
+				{% endif %}
+			{% else %}
+				<div class="col-xs-6 btn-container--save">
+					<input {{ track_event('order.delivery.edit.register_address') }} type="submit" value="{{ 'delivery_form.edit_delivery_address'|trans }}" class="btn btn-lg btn-form--modify js-btn-form-save" id="update-address-btn" />
+				</div>
+			{% endif %}
+		</div>
+
+		{{ form_rest(form) }}
+	</form>
+</div>
