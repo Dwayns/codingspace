@@ -152,6 +152,8 @@ Icon
 
 # End of https://www.gitignore.io/api/node,vuejs,react,visualstudiocode
 
+
+
 ### Personnal folders ###
 datas/
-_tools/
+tools/
