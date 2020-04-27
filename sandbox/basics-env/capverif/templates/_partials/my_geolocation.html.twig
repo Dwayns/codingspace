@@ -1,0 +1,19 @@
+{% set tracking_labels = deliveryPointCarrierTrackLabel(selectedCarrier.id) %}
+<div class="my-geolocation-container js-my-geolocation-container" data-tracking-category="Tunnel_Livraison" data-tracking-action="Display_erreur">
+	<p class="msg-modifier hide js-geoloc-errors js-geoloc-permission-denied">
+        <span class="msg-modifier__child picto-container">&nbsp;</span>
+        <span class="msg-modifier__child msg-modifier-text">{{ 'delivery.maps.errors.permission_denied'| trans({}, 'delivery') }}</span>
+    </p>
+
+    <p class="msg-modifier hide js-geoloc-errors js-geoloc-general">
+        <span class="msg-modifier__child picto-container">&nbsp;</span>
+        <span class="msg-modifier__child msg-modifier-text">{{ 'delivery.maps.errors.general'| trans({}, 'delivery') }}</span>
+    </p>
+
+    <p class="msg-modifier hide js-geoloc-errors js-geoloc-support">
+        <span class="msg-modifier__child picto-container">&nbsp;</span>
+        <span class="msg-modifier__child msg-modifier-text">{{ 'delivery.maps.errors.support'| trans({}, 'delivery') }}</span>
+    </p>
+
+    <a {{ track_event(tracking_labels.geoloc) }} href="#" class="hidden-xs hidden-sm btn-my-geolocation js-btn-my-geolocation" data-tracking="Tunnel_Livraison|Clic_geolocaliser|Mon adresse point retrait"><span>{{ geolocation_trad| trans({}, 'delivery') }}</span></a>
+</div>

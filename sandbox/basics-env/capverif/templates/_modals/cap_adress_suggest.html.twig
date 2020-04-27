@@ -1,0 +1,56 @@
+<section class="suggest-address-wrapper">
+    {# BEGIN MAP INFOS HEADER #}
+    <div class="modal-content-header suggest-address-header row">
+        <h1 class="modal-content-header-title adjust-title col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-0 no-gutters">Veuillez confirmer votre adresse de livraison</h1>
+    </div>
+
+    {# BEGIN SUGGEST ADRESS #}
+    <div class="suggest-address-content row">
+        <div class="scroll-wrapper">
+            <p class="intro-text col-xs-10 col-xs-offset-1">
+                Tiens, on ne connait pas l’adresse que vous avez renseignée. Juste pour être sûr, prenez le temps de la vérifier :
+            </p>
+
+            <div class="suggest-list-container col-xs-10 col-xs-offset-1">
+                <div class="valid-address row">
+                    <h5 class="subtitle bottom-line col-xs-12">
+                        <span>Notre suggestion :</span>
+                    </h5>
+
+                    <ul class="suggest-list col-xs-12 js-suggest-list">
+                        {# <li class="item-address row">
+                            <span class="item-address-info col-xs-7">
+                                <strong>52 Boulevard Volney 75016 Paris</strong>
+                            </span>
+                            <button class="btn btn-lg btn-form--choose js-btn-form-choose col-xs-4 col-xs-offset-1">choisir</button>
+                        </li> #}
+                    </ul>
+                </div>
+
+                <div class="invalid-address row">
+                    <h5 class="subtitle bottom-line col-xs-12">
+                        <span>Votre adresse saisie :</span>
+                    </h5>
+
+                    <ul class="suggest-list col-xs-12">
+                        <li class="item-address row">
+                            <span class="item-info col-xs-7">
+                                <strong id="customer-address-info">{# customer address injected here #}</strong>
+                            </span>
+                            <button class="btn btn-lg btn-form--choose js-btn-form-choose col-xs-4 col-xs-offset-1" id="customer-address-id">choisir</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="customer-address-modify-wrapper row">
+                    <div class="address-modify-content col-xs-12">
+                        Ou 
+                        <a href="#" class="btn-address-modify js-btn-address-modify">
+                            <strong>modifier manuellement mon adresse</strong>
+                        </a>
+                    </div>
+                </div>
+            </div> {# suggest-address-list #}
+        </div>
+    </div>{# END SUGGEST ADRESS #}
+</section>

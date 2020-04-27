@@ -1,0 +1,21 @@
+body {
+    background: rgb(84, 92, 102);
+    padding: 20px;
+    font-family: Helvetica;
+}
+
+.bkg {
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px;
+transition: all 0.2s;
+}
+
+li {
+    margin: 8px 0;
+}
+
+h2 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}

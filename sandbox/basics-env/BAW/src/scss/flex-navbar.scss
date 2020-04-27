@@ -1,0 +1,42 @@
+.container {
+    border: 2px solid pink;
+    display: flex;
+    flex: row;
+    justify-content: flex-end;
+    align-content: space-between;
+}
+
+@media screen and (max-width: 550px) {
+    .container {
+        justify-content: space-around;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+
+    }
+}
+
+/* ******** WIDGEt PART ******** */
+
+.widget {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 200px;
+
+    .box {
+        background-color: #cc0042;
+        // flex-shrink: 2;
+    }
+
+    .middle {
+        background-color: #b20039;
+        // flex-shrink: 1;
+    }
+}
+
+

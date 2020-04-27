@@ -1,0 +1,90 @@
+{% set trans_labels = deliveryPointCarrierTransLabel(selectedCarrier.id) %}
+{% set tracking_labels = deliveryPointCarrierTrackLabel(selectedCarrier.id) %}
+{% set dp = selectedCarrier.deliveryPoint %}
+{% if dp %}
+    {# relay list addresses #}
+    <div class="relay-addresses-container" data-dp-id="{{ dp.id }}" data-dp-type="{{ dp.type |lower }}">
+            <div class="section-title">
+                {{ trans_labels.title|trans({}, 'form')|upper}}
+            </div>
+
+        {% if deliveryPointId is null %}
+            <div class="relay-addresses-subtitle">
+                {{ trans_labels.desc|trans({}, 'form') }}
+            </div>
+        {% endif %}
+
+        {# List of flashbag message #}
+        {% include '@MdmOrder/Delivery/_partials/message_flashbag.html.twig' with {messageTypes : {success: 'deliveryPointSuccess'}, domain: 'form'}  %}
+
+        <div class="relay-addresses-content">
+            <div class="relay-addresses-content__address js-relay-addresses-content">
+                <p class="relay-addresses-content__address__dp-infos">
+                    <span class="dp-info-child icon-item">
+                        <svg role="img" class="icon geoloc-pointer"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-geoloc"></use></svg>
+                    </span>
+                    <span class="dp-info-child address-content">
+                        <strong>{{ dp.title }}</strong><br/>
+                        {{ dp.address is not empty ? dp.address }}<br />
+                        {% if dp.address2 %} {{ dp.address2 }} <br />{% endif %}
+                        {% if dp.addressComplement is not empty %}{{ dp.addressComplement }}<br /> {% endif %}
+                        {{ dp.zipCode }} {{ dp.city }}
+                    </span>
+                </p>
+                {% if dp.schedules %}
+                    <table class="relay-addresses-content__address__schedule js-relay-addresses-container">
+                       <thead class="relay-addresses-content__address__schedule__head">
+                            <tr>
+                                <th colspan="2">
+                                    <a {{ track_event('order.delivery.delivery_point_schedules_state') }} href="#" class="schedule-content-title js-schedule-content-title"> {{ 'delivery_form.see_schedules'|trans({}, 'form') }} </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="relay-addresses-content__address__schedule__body js-schedule-content-body">
+                        {% for s in dp.schedules %}
+                            <tr>
+                                <td class="table-schedule-col1">{{ ('delivery_form.delivery_choice_day_'~loop.index)|trans({}, 'form') }}</td>
+                                {% if not s.is_closed %}
+                                    <td class="table-schedule-col2">
+                                        {{ s.first_start_time|date('H:i') }} - {{ s.first_close_time|date('H:i') }}
+                                        {% if s.second_start_time is defined and s.second_close_time is defined %}  <span class="second-hours">{{ s.second_start_time|date('H:i') }} - {{ s.second_close_time|date('H:i') }}</span> {% endif %}
+                                    </td>
+                                {% else %}
+                                    <td class="table-schedule-col2">{{ 'delivery_form.delivery_point_is_closed'|trans({}, 'form') }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>{# end relay-addresses-content__address #}
+
+                {% if false == appContext.isStore()
+                    or app.session.get('pickup_in_other_store')
+                    or 'Magasin' != selectedCarrier.name
+                %}
+                <div {{ track_event(tracking_labels.change) }} class="relay-btn-container row">
+                    <input type="submit" value="{{ 'delivery.actions.modify'| trans({}, 'delivery') }}" class="btn btn-lg btn-form--mod col-xs-6 col-sm-12 col-md-8 col-lg-12 centered-xs js-btn-relay-mod">
+                </div>{# end relay-btn-container #}
+                {% endif %}
+            </div>{# end relay-addresses-content #}
+
+    </div>{# end relay-adresses-container #}
+
+    {{ delivery_mobile_phone_form(order, mobilePhone) }}
+
+    {# Billing Address form #}
+    <div id="js-billing-address-component" class="billing-address-component">
+        {% if billingAddress and (order.isNewCustomer or appContext.isStore()) %}
+            <div class="section-subtitle margin-sm">
+                {{ 'delivery.address.billing.title'|trans({}, 'delivery') }}
+            </div>
+            {% include '@MdmOrder/Delivery/_partials/address_content.html.twig' with {'billingAddress': billingAddress} %}
+        {% elseif addressForm %}
+            <div class="form form--create-address js-form-create-address">
+                {% include '@MdmOrder/Delivery/_partials/address_form.html.twig' with {'form': addressForm, 'action': 'create'} %}
+            </div>
+        {% endif %}
+        <div class="form form--update-address js-form-update-address"></div>
+    </div>
+{% endif %}

@@ -1,0 +1,26 @@
+{% if shippingAddress != null %}
+    {# List shipping addresses form #}
+    {% include '@MdmOrder/Delivery/_partials/list_addresses_form.html.twig' with {'listAddressesForm': listAddressesForm} %}
+{% endif %}
+{% set nbAddressType = shippingAddress is not empty ? 1 : 0 %}
+{% set nbAddressType = billingAddress is not empty ? nbAddressType + 1 : nbAddressType %}
+
+{% if appContext.isStore() %}
+    <div id="js-isoBilling-row"
+         data-nb-address-type="{{ nbAddressType }}"
+         data-add-billing-address="{{ app.user.hasAddedBillingAddress() ? 1 : 0 }}">
+        <p class="fields_content">
+            <input id="js-isoBilling" type="checkbox" checked />
+            <label for="js-isoBilling"> {{ 'delivery.shipping_address' | trans({}, 'delivery') }} </label>
+        </p>
+    </div>
+{% endif %}
+
+{# Address form #}
+<div class="form form--create-address js-form-create-address">
+    {% include '@MdmOrder/Delivery/_partials/address_form.html.twig' with {'form': addressForm, 'action': 'create'} %}
+</div>
+
+<div class="form form--update-address js-form-update-address"></div>
+
+{{ delivery_mobile_phone_form(order, mobilePhone) }}

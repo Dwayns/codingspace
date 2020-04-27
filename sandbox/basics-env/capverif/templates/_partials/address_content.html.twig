@@ -1,0 +1,24 @@
+{# address content #}
+<div class="relay-addresses-container js-address-content" data-address-id="{{ billingAddress.id }}">
+    {# List of flashbag message #}
+    {% include '@MdmOrder/Delivery/_partials/message_flashbag.html.twig' with {messageTypes : {error: 'adressFormError', success: 'adressFormSuccess'}, domain: 'form'}  %}
+
+    <div class="relay-addresses-content">
+        <div class="relay-addresses-content__address">
+            <p class="relay-addresses-content__address__dp-infos">
+                <span class="dp-info-child icon-item billing-address">
+                    <svg role="img" class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-billing-address"></use></svg>
+                </span>
+                <span class="dp-info-child address-content">
+                    <strong>{{ billingAddress.firstname ~' '~ billingAddress.lastname }}</strong><br/>
+                    {{ billingAddress.street is not empty ? billingAddress.street }}<br />
+                    {{ billingAddress.postalCode }} {{ billingAddress.city }}
+                </span>
+            </p>
+        </div>{# end relay-addresses-content__address #}
+
+        <div class="relay-btn-container row">
+            <input id="js-update-address" type="submit" value="{{ 'delivery.actions.modify'| trans({}, 'delivery') }}" class="btn btn-lg btn-form--mod col-xs-6 col-sm-12 col-md-8 col-lg-12 centered-xs js-edit-address">
+        </div>{# end relay-btn-container #}
+    </div>{# end relay-addresses-content #}
+</div>{# end relay-addresses-container #}

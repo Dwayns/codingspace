@@ -1,0 +1,37 @@
+{% extends 'MdmOrderBundle:Layouts:layout.html.twig' %}
+
+{% block content %} 
+    <section class="content container-fluid">
+        {% include 'MdmOrderBundle:Delivery:delivery_content.html.twig' with {'order': order, 'language': language, 'market': market, 'context': context, 'cartUrl': cartUrl} %}
+    </section>
+
+{% endblock %}
+
+{% block footer %}
+    {# detect page refreshed #}
+    <input type="hidden" id="refreshed" value="true">
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var currentMarket = '{{ market }}';
+        var context = '{{ context.name }}';
+        var forceCapAddress = false;
+    </script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ static_js('mdm.CapAddress.js') }}"></script>
+    <script type="text/javascript">
+
+        function bindCapAddress() {
+            if (typeof capAddress != 'undefined') {
+                delete capAddress;
+                delete capAddressForm;
+            }
+
+            var capAddress = new Mdm.CapAddress('{{ market }}', ".js-cap-zipcode", ".js-cap-city", '.js-capScore', '.js-capState', '.js-country', '.js-edit-city');
+            new CapAddressForm('.js-capForm', capAddress);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js{% if gmaps_api_key is not empty %}?client={{ gmaps_api_key }}{% endif %}" async defer></script>
+{% endblock %}

@@ -1,0 +1,115 @@
+.subtitle {
+    animation-name: rainbowtext;
+    animation-duration: 4s;
+    animation-delay: 0;
+    animation-iteration-count: 3;
+    margin: 0;
+    padding: 0;
+}
+
+.section {
+    &.one {
+        height: 60px;
+    }
+
+    &.two {
+        height: auto;
+        position: relative;
+        min-height: 150px;
+        overflow: auto;
+    }
+
+    .sky {
+        animation-name: skycolorscycle;
+        animation-duration: 5s;
+        animation-timing-function: linear;
+        animation-iteration-count: 3;
+        background-color: darkblue;
+        position: relative;
+    }
+
+    .sun {
+        /* animation-name: suncycle;
+        animation-duration: 5s;
+        animation-timing-function: linear;
+        animation-delay: 0;
+        animation-iteration-count: infinite; */
+        // animation: name duration timing-function delay iteration-count direction fill-mode;
+        animation: suncycle 5s linear 0s 3;
+        background-color: yellow;
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+    }
+    .grass {
+        background-color: green;
+        height: 70px;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+/*** KEYFRAMES ***/
+@keyframes suncycle {
+    0% {
+        transform: translate(0, 50px);
+    }
+    25% {
+        transform: translate(180px, -30px);
+    }
+    50% {
+        transform: translate(280px, -50px);
+    }
+    75% {
+        transform: translate(450px, -25px);
+    }
+    100% {
+        transform: translate(600px, 50px);
+    }
+}
+@keyframes skycolorscycle {
+    0% {
+        background-color: black;
+    }
+    10% {
+        background-color: rgb(241, 211, 165);;
+    }
+    40% {
+        background-color: rgb(23, 123, 238);
+    }
+    80% {
+        background-color: rgb(23, 123, 238);
+    }
+    90% {
+        background-color: rgb(241, 211, 165);
+    }
+    100% {
+        background-color: black;
+    }
+}
+@keyframes rainbowtext {
+    0% {
+        color: red;
+        font-size: 20px;
+    }
+    25% {
+        color: orange;
+    }
+    50% {
+        color: yellow;
+        font-size: 30px; /*It's better to use scale than font-size on prod*/
+        // transform-origin: top left;
+        //transform: scale(0.5);
+        transform: translateX(200px);
+    }
+    50% {
+        color: green;
+    }
+    100% {
+        color: red;
+        font-size: 20px;
+    }
+}
+
+
+

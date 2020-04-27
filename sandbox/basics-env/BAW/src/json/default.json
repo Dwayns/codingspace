@@ -1,0 +1,8 @@
+{
+    "text": "Im your default JSON !",
+    "price": "1 000 000 000",
+    "currency": {
+        "dollar": "$",
+        "euro": "€"
+    }
+}

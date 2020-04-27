@@ -1,0 +1,66 @@
+{% set trans_labels = deliveryPointCarrierTransLabel(selectedCarrier.id) %}
+{% set popinAddress = '' %}
+{% if searchAddress %}
+    {% set popinAddress = searchAddress %}
+{% elseif shippingAddress %}
+    {% set popinAddress = shippingAddress.street ~', '~ shippingAddress.postalCode ~' '~ shippingAddress.city %}
+{% endif %}
+<section class="relay-map-infos">
+    <div class="relay-map-infos__geoloc row">{# BEGIN MAP INFOS GEOLOC #}
+        {# BEGIN MAP INFOS HEADER #}
+        <div class="modal-content-header relay-map-infos__header row">
+            <h1 class="modal-content-header-title col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-0 no-gutters">{{ trans_labels.title|trans({}, 'form') }}</h1>
+        </div>
+        
+        <div class="relay-map-infos__geoloc__current-address col-sm-12 centered-sm hidden-xs">
+            <span class="current-address-pos current-address-pos--picto icon-item">
+                <svg role="img" class="icon geoloc-position"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/prm-defs.svg#shape-geoloc-position"></use></svg>
+            </span>
+            <span class="current-address-pos current-address-pos--address">
+                <strong class="hidden-xs-inline-block">{{ 'delivery.maps.near_from'| trans({}, 'delivery') }} </strong>
+                <span class="js-address-proximity">{{ popinAddress }}</span>
+            </span>
+        </div>
+
+        {# FORM SEARCH-ADDRESS #}
+        <div class="relay-map-infos__geoloc__search-address col-sm-5">
+            <h1 class="section-title hidden-xs">
+                {{ trans_labels.text| trans({}, 'delivery') }}
+            </h1>
+
+                    <div class="search-address-error-wrapper">
+                        <p class="msg-modifier hide js-search-address-error msg-modifier--error">
+                            <span class="msg-modifier__child picto-container">&nbsp;</span>
+                            <span class="msg-modifier__child msg-modifier-text">{{ 'delivery.maps.errors.search_adress'| trans({}, 'delivery') }}</span>
+                        </p>
+                    </div>
+
+                    <form action="#" method="post" class="search-address-form js-search-address-form row">
+                        <input type="search" name="search-address" required="required" class="address optional input col-xs-12 col-sm-8 col-md-9 search-address-form__text js-search-address" autocomplete="off" value="{{ popinAddress }}">
+
+                <span class="btn-erase js-erase-search-address visible-xs">&#10005;</span>
+
+                <input type="submit" value="OK" class="btn btn-lg btn-form--modify btn-form--search col-sm-3 col-md-2 js-btn-search-address hidden-xs">
+            </form>
+
+            {% include '@MdmOrder/Delivery/_partials/my_geolocation.html.twig' with {'geolocation_trad': 'delivery.maps.my_geolocation'} %}
+        </div>
+
+        {# GMAP API EMBED #}
+        <div class="relay-map-infos__geoloc__map col-sm-7 no-gutters">
+            <div class="relay-map-embed" id="js-relay-map-embed"></div>
+        </div>
+
+        <div class="scroll-wrapper">
+            {# BEGIN MAP INFOS LIST RELAY #}
+            <div class="relay-map-infos__geoloc__prm-list-container col-sm-5 no-gutters">
+                <h1 class="section-title hidden-xs">
+                    {{ 'delivery.search_result'| trans({}, 'delivery') }}
+                </h1>
+                <div class="prm-list-content js-prm-list-content">
+                    {# delivery points are injected here#}
+                </div>
+            </div>
+        </div>
+    </div>{# END MAP INFOS GEOLOC #}
+</section>

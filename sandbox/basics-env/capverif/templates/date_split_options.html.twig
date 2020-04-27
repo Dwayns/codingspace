@@ -1,0 +1,90 @@
+<ul class="bl-info-container">
+    <li class="bl-info-item bl-info-item-split js-bl-info-item js-bl-split-item">
+        <div class="bl-info-item__recap row">
+            <input id="bl-pan-date-split" class="hide" name="toggle-date-split" type="checkbox" />
+
+            <div class="bl-title-wrapper">
+                <div class="recap-content recap-content-title col-xs-10 col-sm-8 no-gutters">
+                    <label {{ track_event('order.delivery.split.more_infos') }} class="recap-title js-recap-title title-block js-toogle-infos" for="bl-pan-date-split">
+                        <h1 class='section-title'>
+                            {{ 'delivery_form.split_by_date.title'|trans({}, 'form') }}
+                        </h1>
+                    </label>
+                </div>
+
+                <div class="recap-content recap-content-more-info col-xs-2 col-sm-4 no-gutters">
+                    <label {{ track_event('order.delivery.split.more_infos') }} class="recap-more-info js-recap-more-info title-block js-toogle-infos" for="bl-pan-date-split">
+                        <span class="delivery-infos delivery-infos--picto-more">&nbsp;</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="wrapper-recap-details">
+                <div class="recap-details date-split">
+                    <p class="split-info">
+                        {{ 'delivery_form.split_by_date.subtitle'|trans({}, 'form') }}
+                    </p>
+
+                    <ul class="split-option-container js-split-option-container {% if wasSplitted %}js-splitted{% endif %}">
+                        <li class="js-split-option active">
+                            <input class="hide js-split-option-entry"
+                                    name="delivery-split-option"
+                                    value="0"
+                                    type="radio"
+                                    checked
+                            >
+                            <label {{ track_event('order.delivery.split.group_delivery') }} for="delivery-split-option" class="check-input">
+                                <i class="icon-item input-bullet bullet-empty">
+                                    <svg role="img" class="icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-bullet-empty"></use>
+                                    </svg>
+                                </i>
+                                <i class="icon-item input-bullet bullet-full">
+                                    <svg role="img" class="icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-bullet-full"></use>
+                                    </svg>
+                                </i>
+                                <p class="split-details">
+                                    <span class="split-details-item" >
+                                        {{ 'delivery_form.split_by_date.radio_split_groups.title1'|trans({}, 'form') }}
+                                    </span>
+                                    <span class="split-details-item title-complement">
+                                        {{ 'delivery_form.split_by_date.radio_split_groups.title2'|trans({}, 'form') }}
+                                    </span>
+                                </p>
+                            </label>
+                        </li>
+
+                        <li class="js-split-option">
+                            <input class="hide js-split-option-entry"
+                                    name="delivery-split-option"
+                                    value="1"
+                                    type="radio"
+                            >
+                            <label {{ track_event('order.delivery.split.split_delivery') }} for="delivery-split-option" class="check-input">
+                                <i class="icon-item input-bullet bullet-empty">
+                                    <svg role="img" class="icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-bullet-empty"></use>
+                                    </svg>
+                                </i>
+                                <i class="icon-item input-bullet bullet-full">
+                                    <svg role="img" class="icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/order-static/app/images/svgs-def/delivery-defs.svg#shape-bullet-full"></use>
+                                    </svg>
+                                </i>
+                                <p class="split-details">
+                                    <span class="split-details-item">
+                                        {{ 'delivery_form.split_by_date.radio_union_groups.title1'|trans({}, 'form') }}
+                                    </span>
+                                    <span class="split-details-item title-complement">
+                                        {{ 'delivery_form.split_by_date.radio_union_groups.title2'|trans({}, 'form') }}
+                                    </span>
+                                </p>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
