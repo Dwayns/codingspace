@@ -1,0 +1,261 @@
+[Terminal - Commandes]
+   Babun :
+     Log to ssh
+     --- ✄ -----------------------
+       ssh dev@www.mdm.local
+     --- ✄ -----------------------
+
+[Terminal - Commandes]
+   Compilation + MAJ Fichiers :
+       Desktop :
+         make
+         composer install /composer update
+
+       Tablet :
+         composer install /composer update
+
+/////////////////////////// *** ///////////////////////////
+  Cache :
+    Forcer ecriture :
+      HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+      sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+      sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+
+      sudo setfacl -R -m u:"www-data":rwX -m u:`whoami`:rwX app/cache app/logs
+      sudo setfacl -dR -m u:"www-data":rwX -m u:`whoami`:rwX app/cache app/logs
+
+    Vider :
+       rm -rf cache/*
+       rm -rf app/cache/*
+
+       rm -rf vendor/*
+
+       Desktop :
+         php symfony cc // ./symfony cc
+         php symfony sw:combine frontend [PAGE STATIQUES]
+
+       Tablet :
+         (Symfony 2 command)
+         php app/console cache:clear
+         php app/console cache:clear --env=prod [ATTENTION] 
+         php app/console assets:install --end=dev
+
+/////////////////////////// *** ///////////////////////////
+  Logs :
+    Afficher logs : 
+       sudo tail -f /var/log/nginx/[serverName]_*  //  sudo tail -f /var/log/nginx/[serverName]_* | ccze 
+       EX : sudo tail -f /var/log/nginx/mdm.error.log
+
+       sudo tail -f /var/log/php-fpm/[serverName].error.log
+
+       tail -f log/frontend_prod.log
+
+       tail -f log/standardized/frontend_dev.log
+       tail -f log/frontend_*.log | grep "[err]"
+       => grep = filtrer (ex: grep "[err]" = filtrer les fichiers commençant par "err")
+
+       tail -f app/logs/* | grep '\[ERROR\]'
+
+/////////////////////////// *** ///////////////////////////
+  Serveur/Moteur :
+    Redemarrage :
+      sudo service nginx restart // /etc/init.d/nginx restart
+      sudo service php5-fpm restart // /etc/init.d/php5-fpm restart
+
+/////////////////////////// *** ///////////////////////////
+     ERRORS :
+       Forcer ecriture repertoire :
+         sudo chmod -Rf 777 Repertory (cf: web/images/)
+
+         sudo setfacl -dR -m u:"www-data":rwX -m u:`whoami`:rwX app/cache
+         sudo setfacl -R -m u:"www-data":rwX -m u:`whoami`:rwX app/cache
+
+         sudo setfacl -R -m u:"www-data":rwX -m u:`whoami`:rwX app/logs
+         sudo setfacl -dR -m u:"www-data":rwX -m u:`whoami`:rwX app/logs
+
+         PB droits ecriture sass :
+           sudo setfacl -R u:dev:rwX .
+           sudo setfacl -dR u:dev:rwX .
+
+       Guzzle not found : 
+         Essayer : git submodule update
+         (ex error : Call to undefined method Guzzle\Service\Resource\Model::getCategories() in /home/dev/workspace/MDMSITE/web-forked/plugins/mdmProductPlugin/modules/mdmProductSheet/actions/actions.class.php on line 69)
+
+       Calendar not found :
+         update properties.ini/dist
+         modify path of calendar.yml
+         php symfony cc
+         
+       SDK :
+         PB version :
+         (MAJ avec la version de la branche en cours)
+         rm -rf lib/vendor/MDM/sdk-php
+         git submodule init
+         git submodule update
+
+
+/////////////////////////// *** ///////////////////////////
+  GLOBAL :
+     Host (Win): 
+       C:\Windows\System32\drivers\etc\hosts
+     Host (VM): 
+      (Go to Host rep)
+      --- ✄ -----------------------
+      cd /etc/nginx/sites-enabled/
+      (list all host files/)
+      ls 
+      "nano" or "vim" filename => edit file => sup IP server name
+      "nano" or "vim" filename => edit file => add IP server name
+        [Lines to modify]
+        server_name tablet.local 192.168.224.22;
+        root /home/dev/workspace/MDMSITE/tablet-forked/web;
+      --- ✄ -----------------------
+
+      Edit file => vi /etc/nginx/sites-enabled/mdm_site
+
+     Users :
+      passage de dev à root => sudo su
+      passer commande en tant que dev => sudo + cmd
+
+    Droits écriture :
+      chmod -R 777 + directory
+
+      Changer droit (cf: old mode 100644  new mode 100755) : 
+        --- ✄ -----------------------
+        chmod -x file
+        --- ✄ -----------------------
+
+        cf: git config core.filemode false (https://stackoverflow.com/questions/1257592/how-do-i-remove-files-saying-old-mode-100755-new-mode-100644-from-unstaged-cha)
+        https://stackoverflow.com/questions/1580596/how-do-i-make-git-ignore-file-mode-chmod-changes
+
+    Show file content (no edit) :
+      cat filename
+
+    Kill Linux process :
+      --- ✄ -----------------------
+      sudo killall appliname
+
+      ex: sudo killall phpstorm
+      --- ✄ -----------------------
+      ps -ax | grep appliname
+      [look id number => ex: 3407 ?]
+
+      sudo kill -9 3407
+      --- ✄ -----------------------
+
+      OR 
+
+      alt+f2 => type xkill and hit enter => click on the program you would like to force quit
+
+    SHELL:
+      Change:
+
+        --- ✄ -----------------------
+        chsh -s /bin/bash
+        --- ✄ -----------------------
+
+      Check :
+        --- ✄ -----------------------
+        echo $SHELL
+        --- ✄ -----------------------
+
+        
+    VIM/NANO Files:
+      i => insertion mode
+      CTRL+C => Quit
+      Ctrl+D or exit => Quitter Root
+      x ou qx
+
+      [NO Insertion mode]
+      Copy & paste :
+        yy => Duplicate line
+        dd => Delete line
+
+      Searching :
+        cf: http://vim.wikia.com/wiki/Search_and_replace // https://www.cs.swarthmore.edu/help/vim/searching.html
+
+    Memory/CPU :
+      df -h
+      
+    Reset terminal :
+      Bash :
+       source .bashrc
+
+      ZSH :
+       source .zshrc
+
+    Define port :
+       php -S host:port
+
+       ex: In directory => php -S localhost:8000
+
+    Search file :
+      locate "filename"
+
+   ZSH (~.zshrc ):
+     My_shortcuts :
+        alias all='cd ~/workspace'
+        alias nav='cd ~/workspace/apps/nav'
+        alias order='cd ~/workspace/apps/order'
+        alias user='cd ~/workspace/apps/user'
+        alias web='cd ~/workspace/apps/web'
+        alias ws='cd ~/workspace/ws'
+        
+        alias all='cd ~/workspace'
+        alias nav='cd ~/workspace/apps/nav'
+        alias order='cd ~/workspace/apps/order'
+        alias user='cd ~/workspace/apps/user'
+        alias web='cd ~/workspace/apps/web'
+        alias ws='cd ~/workspace/ws'
+        alias bw='bin/workspace'
+        alias bwsi='bin/workspace init'
+        alias bws='bin/workspace start'
+        alias bwstp='bin/workspace stop'
+        alias bwst='bin/workspace status'
+        alias bwlg='bin/workspace logs'
+        alias bwrst='bin/workspace restart'
+        alias bwrdb='bin/workspace restore-dbs'
+        alias bwsp='bin/workspace set-permissions'
+        alias bwup='bin/workspace update'
+        alias bwsw='bin/workspace switch-env'
+        alias bwfxa='bin/workspace fix-all'
+
+
+
+    /////////////////////////// *** ///////////////////////////
+    HOTFIX :
+      Create tar :gz :
+       (Se positioner à la source (ex: web-forked))
+       tar -cvf filename.tar.gz / tar -cvf filename.tar  + list files
+       --- ✄ -----------------------
+       (ex: tar -cvf ccl-desktop-fix.tar lib/helper/mdmStoreDeliveryHelper.php plugins/mdmHomePagePlugin/modules/mdmHomePage/templates/mainV2PreviewSuccess.php)
+       --- ✄ -----------------------
+
+    TAG :
+      Création d'un tag static :
+        1 - Merger la branche valide vers master
+        2 - (cf: interface Bitbucket) Créer le tag en allant dans la rub "commits" => accéder au commit/merge souhaité (click sur le hash) => sur la droite ajouter un nouveau tag (en incrémentant le dernier numéro tag existant). 
+        3 - Modifier/Update le composer.json avec le numéro du tag. 
+
+        
+      - Merge sa branch de modif vers master (ex: release/??? vers master)
+      - git fetch && git checkout master && git pull origin master
+      - Selon le type de modif, voir le numéro du tag que l'on souhaite créer (au format x.y.z)
+      - Mettre à jour le CHANGELOG.md, commit et push
+      - git tag x.y.z
+      - git push origin x.y.z
+
+      Exemple d'update static sur App Order :
+      - Aller sur la branch de feature/fix et mettre à jour le composer.json avec le numéro de tag x.y.z
+      - composer update mdm/static
+      - vérifier le hash du mdm/static dans le composer.lock
+      - faire le commit + push
+      - PR de la branch vers master
+
+
+---------------------------
+ 1 - Merger sur master
+ 2 - Crée le tag sur le dernier merge (cf: interface Bitbucket)
+ 3 - Update le composer.j
+
+
