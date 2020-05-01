@@ -1,0 +1,98 @@
+/////////////////////////// *** ///////////////////////////
+GULP :
+  Install :
+    Install the package globally
+    - npm i -g gulp
+
+/////////////////////////// *** ///////////////////////////
+BOWER (Package manager for Front-End) :
+  1#Install :
+    Install the package globally
+    - npm install -g bower
+
+    Update bower
+    - npm install -bower to update
+
+  2#Install package :
+    V1 [GLOBAL] : 
+      Install a package with all his dependencies. This create a "bower_components" folder in the root level.
+      - bower install package_name
+        ex : bower install foundation // bower install bootstrap
+      - bower install package_name#x
+       Install a specifiq major-version
+      - bower install package_name#x.x
+      Install a specifiq major-version.minor-version
+
+      - bower update
+      Update all packages
+
+      - npm install bower-update -g
+      - bower-update
+      Update all packages in their latest versions
+
+      Uninstall a package. The"bower_components" folder will be empty but not remove.
+      - bower uninstall package_name
+      Uninstall a package with all his dependencies. The"bower_components" folder will be empty but not remove.
+      - bower uninstall package_name --save
+      Uninstall multiple package with all his dependencies.
+      - bower uninstall package_name package_name package_name
+
+      List installed package 
+      - bower list
+
+      - bower search package_name
+      Can use the name of package or the git endpoint(git url)
+
+  Allow "sudo" for bower command :
+    - bower --allow-root
+    
+      cf: in package.json
+      --- ✄ -----------------------
+        "scripts": {
+          "bower-foundation": "cd common/foundation && bower --allow-root",
+          "gulp": "gulp",
+          "start": "gulp"
+        }
+      --- ✄ -----------------------
+
+    V2 [BOWER.JSON]:
+      Best way for multiple package => Install/Update multiple packages with a single command => Create your own package
+      Set up bower.json :
+        Bower.json structure :
+          - name => The name of your application
+          - version => A version number for your application/package
+          - dependencies => The packages that are required by your application. You should specify a version   number for each of these packages. Specifying latest, will cause Bower to install the most recent   release of a package.
+          - private => Setings this property to true means that you want the package to remain private and do not wish to add it to the registry in the future.
+
+      Install all package specified bower.json
+      - bower install 
+
+      --- ✄ -----------------------
+      Create the bower.json with Bower utility 
+      - bower init
+
+        Bower.json structure/questions :
+          - name => project-name
+          - version => x.x.x
+          - description => Project Description
+          - main file: => list the files primarily used in the project (Bower doesn't directly use these files but they can be used by build tools).
+          - what types of modules does this package expose? => Leave empty
+          - keywords => leave empty
+          - authors => Automaticly set.
+          - license => MIT
+          - homepage: => leave empty
+          - set currently installed components as dependencies? => Yes
+          - add commonly ignored files to ignore list? => Yes
+          - would you like to mark this package as private which prevents it from being accidentally published to the registry? => Yes
+
+    Control directory/name of "bower_components" :
+      Create and set .bowerrc in the bower commands directory
+      --- ✄ -----------------------
+        {
+          "directory" : "path/new_directory"
+        }
+     
+  3#Include scripts / styles :
+    Link files with html/php
+    - <script src="">
+    - <link rel="stylesheet">
