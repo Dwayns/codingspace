@@ -105,6 +105,7 @@ dist/
 .dynamodb/
 
 # Temporary folders
+deploy/
 tmp/
 temp/
 
