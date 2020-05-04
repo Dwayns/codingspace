@@ -1,15 +1,13 @@
-[GIT ZSH Plugin - SHORTCUTS/PROCESS]
+# GIT COMMANDS AND ALIASES for ZSH Plugin
 
-https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git/git.plugin.zsh
+[Oh My Zsh plugin](https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git/git.plugin.zsh)
 
-/////////////////////////// GIT ALIASES ///////////////////////////
+---
 
-  /////////////.bashrc / .zshrc [in home(~) directory] /////////////
+## **.bashrc / .zshrc [in home(~) directory]**
   
-# Aliases
-# (sorted alphabetically)
-#
-
+**Aliases** *(sorted alphabetically)*
+```
 alias g='git'
 
 alias ga='git add'
@@ -164,3 +162,4 @@ alias glum='git pull upstream master'
 
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
+```
