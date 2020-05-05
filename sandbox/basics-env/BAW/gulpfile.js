@@ -78,7 +78,7 @@ const styles = () =>
 // .pipe(bs.stream());
 
 const scripts = () =>
-  src(paths.js.main)
+  src(paths.js.src)
     .pipe(
       babel({
         presets: ['@babel/env'],
