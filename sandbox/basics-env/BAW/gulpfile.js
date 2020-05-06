@@ -85,7 +85,7 @@ const scripts = () =>
       }),
     )
     .pipe(uglify())
-    .pipe(concat('main.js'))
+    // .pipe(concat('main.js'))
     .pipe(dest(paths.js.dest));
 
 const json = () => src(paths.json.src).pipe(dest(paths.json.dest));
