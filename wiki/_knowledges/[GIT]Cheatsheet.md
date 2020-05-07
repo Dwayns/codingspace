@@ -11,16 +11,25 @@
   - [CREATE A GIT FORK IN FOLDER](#create-a-git-fork-in-folder)
     - [MISES A JOUR](#mises-a-jour)
     - [LIST & MISE A JOUR BRANCHE](#list--mise-a-jour-branche)
+      - [Lister toutes les branches (Local et distant) :](#lister-toutes-les-branches-local-et-distant)
+      - [Lister toutes les branches distantes :](#lister-toutes-les-branches-distantes)
+      - [Renommer branch local](#renommer-branch-local)
   - [CREATION/DUPLICATION BRANCHE](#creationduplication-branche)
+      - [4 - Dupliquer la branche local sur source :](#4---dupliquer-la-branche-local-sur-source)
     - [ADD/COMMIT/PR](#addcommitpr)
+      - [6B - Renommer précédent commit (PAS encore poussé en PR)](#6b---renommer-pr%c3%a9c%c3%a9dent-commit-pas-encore-pouss%c3%a9-en-pr)
+      - [Supprimer fichier d'un commit :](#supprimer-fichier-dun-commit)
     - [BRANCHE EXISTANTE](#branche-existante)
+      - [3B - Renommer branch local et origin :](#3b---renommer-branch-local-et-origin)
     - [MERGER BRANCHES](#merger-branches)
     - [REBASE & SQUASH](#rebase--squash)
     - [SAUVERGADER&SWITCH BRANCHE](#sauvergaderswitch-branche)
     - [SUPPRESSION BRANCHE EXISTANTE](#suppression-branche-existante)
+      - [Supprimer une branche distante :](#supprimer-une-branche-distante)
     - [REMOTE DISTANT](#remote-distant)
     - [CLÔNE REMOTE DISTANT](#cl%c3%94ne-remote-distant)
     - [CONFLITS / HISTORY](#conflits--history)
+      - [Remonter niveau commit :](#remonter-niveau-commit)
     - [PB BRANCHE INCOMPLETE](#pb-branche-incomplete)
     - [PB PUSH ORIGIN](#pb-push-origin)
     - [Divers](#divers)
@@ -155,17 +164,17 @@ Scope
 
 ### LIST & MISE A JOUR BRANCHE
 
-  Lister toutes les branches (Local et distant) :  
+  #### Lister toutes les branches (Local et distant) :  
   `git branch -a`
   
-  Lister toutes les branches distantes :  
+  #### Lister toutes les branches distantes :  
   `git branch -r`
   
   Mise à jour branche :  
   `git co <branch>`  
   `git push origin/source <branch>`  
 
-  Renommer branch local  
+  #### Renommer branch local  
   `git branch -m <oldname>` (Actuelle)  
   `git branch -m <oldname> <newname>`
   
@@ -179,7 +188,7 @@ Scope
   3B - Créer la branche local à partir copie branche distante:  
     `git branch <branch> source/<branch>`
   
-  4 - Dupliquer la branche local sur source :  
+  #### 4 - Dupliquer la branche local sur source :  
     `git push source <branch>`  
     ou  
     `git push source master:<branch>`  
@@ -194,7 +203,7 @@ Scope
   6 - Committer les modifs :
     `git commit -m "[FEATURE/KB-3558] Images changed"`
     
-  6B - Renommer précédent commit (PAS encore poussé en PR)  
+  #### 6B - Renommer précédent commit (PAS encore poussé en PR)  
   `git commit --amend`  
   `git push -f origin feature/[branche]`  
   (Force la réécriture du commit) 
@@ -208,7 +217,7 @@ Scope
   8 - Pull request  
   Création pull request depuis Stash.
 
-  Supprimer fichier d'un commit :  
+  #### Supprimer fichier d'un commit :  
   `git reset --soft HEAD~1`  
 
   (reset le fichier non voulu et le sortir du commit)  
@@ -230,7 +239,7 @@ Scope
   3 - Renommer branch local (en cours) :  
   `git branch -m new_name`
   
-  3B - Renommer branch local et origin :  
+  #### 3B - Renommer branch local et origin :  
    `git branch -m old_name new_name`  
    (Delete remote br)  
    `git push origin :old_name`  
@@ -288,7 +297,7 @@ Scope
   Supprimer une branche local:  
   `git branch -d <branch>`
   
-  Supprimer une branche distante :  
+  #### Supprimer une branche distante :  
   (`git branch -dr source/<branch>`) = KO  
   `git push source --delete <branch>`  
   `git push source :<branch>`
@@ -323,7 +332,7 @@ Scope
 
 ### CONFLITS / HISTORY 
 
-  Remonter niveau commit :  
+  #### Remonter niveau commit :  
   (`git reset --hard HEAD`)  
   `git reset HEAD~1`
 
