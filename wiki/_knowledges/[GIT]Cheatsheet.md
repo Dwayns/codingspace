@@ -11,8 +11,6 @@
   - [CREATE A GIT FORK IN FOLDER](#create-a-git-fork-in-folder)
     - [MISES A JOUR](#mises-a-jour)
     - [LIST & MISE A JOUR BRANCHE](#list--mise-a-jour-branche)
-      - [Lister toutes les branches (Local et distant) :](#lister-toutes-les-branches-local-et-distant)
-      - [Lister toutes les branches distantes :](#lister-toutes-les-branches-distantes)
       - [Renommer branch local](#renommer-branch-local)
   - [CREATION/DUPLICATION BRANCHE](#creationduplication-branche)
       - [4 - Dupliquer la branche local sur source :](#4---dupliquer-la-branche-local-sur-source)
@@ -164,10 +162,10 @@ Scope
 
 ### LIST & MISE A JOUR BRANCHE
 
-  #### Lister toutes les branches (Local et distant) :  
+  Lister toutes les branches (Local et distant) :  
   `git branch -a`
   
-  #### Lister toutes les branches distantes :  
+  Lister toutes les branches distantes :  
   `git branch -r`
   
   Mise à jour branche :  
