@@ -23,11 +23,17 @@
       - [Responsive image :](#responsive-image)
   - [JAVASCRIPT](#javascript)
     - [jQuery :](#jquery)
+      - [Check if DOM or Window are ready](#check-if-dom-or-window-are-ready)
+      - [Isolate jQuery($) and avoid conflicts](#isolate-jquery-and-avoid-conflicts)
+      - [Ajax methods and shorthand](#ajax-methods-and-shorthand)
     - [Vanilla :](#vanilla)
     - [**SNIPPETS**](#snippets-1)
       - [Check element](#check-element)
       - [Device detection [isMobile] :](#device-detection-ismobile)
       - [ScrollTo [JS]:](#scrollto-js)
+      - [onLoad methods (Window or DOM)](#onload-methods-window-or-dom)
+      - [AJAX request (XHR, Fetch, Axios)](#ajax-request-xhr-fetch-axios)
+      - [Fetch](#fetch)
 
 ---
 ---
@@ -191,7 +197,7 @@
   ```
 
 ---
-[^^^](#snippet---best-practice---fed)
+[^^^](#snippets---best-practice---fed)
 
   ### **SASS / COMPASS :**
   #### Install :
@@ -345,6 +351,76 @@
 
   ## JAVASCRIPT
   ### jQuery :
+  #### Check if DOM or Window are ready
+  ```javascript
+  $('document').ready(function() {
+
+  });
+  
+  // OR
+  // $() => Shorthand for $( document ).ready()
+  $(function() {
+    // jQuery stuff
+  });
+
+  // OR
+  // Passing a named function instead of an anonymous function.
+ 
+  function readyFn( jQuery ) {
+      // Code to run when the document is ready.
+  }
+  
+  $( document ).ready( readyFn );
+  // or:
+  $( window ).on( "load", readyFn );
+  ```
+  #### Isolate jQuery($) and avoid conflicts
+  ```javascript
+  (function($, window){
+    // use $ here freely if you think any other library might have overridden it outside.
+    $(function(){
+      // do this after dom is ready
+    });
+  })(jQuery, window);
+
+  jQuery(function($) { 
+    /* jQuery is aliased to $ inside this block even if another library is normally assigned to $ */ 
+  });
+  ```
+
+  #### Ajax methods and shorthand
+  ```javascript
+  /* AJAX */
+  $.ajax({
+    method: 'GET', // POST
+    url: 'url',
+    // dataType: 'json', // If not specify by defaut a "intelligent guess" will be used
+    // data: { name:"Jack", location:"Wwakanda"} // If POST method
+  })
+    .done(/* function */)
+    .fail(/* function */);
+
+  /* GET */
+  $.get('url')
+    .done(function(data) {
+    //console.log(data);
+    })
+    .fail(function() {
+      //console.log('ERROR !');
+    });
+
+  /* POST */
+  var data = { name: 'Jack', city: 'Kin' };
+
+  $.post('url', data)
+    .done(/* function */)
+    .fail(/* function */);
+
+  /* getJSON */
+  $.getJSON('url')
+    .done(/* function */)
+    .fail(/* function */);
+  ```
 
   ### Vanilla :
   **querySelectorAll + forEach (fix for IE & FF):**  
@@ -493,6 +569,124 @@
   $("#overflow_div").scrollTo("#innerItem");
   $("#overflow_div").scrollTo("#innerItem", 2000); //custom animation speed 
   ```
-    
+  #### onLoad methods (Window or DOM)
+  ```javascript
+  // Whole DOM loaded include styles, images and others
+  window.onload = function() {
+    // console.log("On load !");
+  };
+
+  // Whole DOM only loaded
+document.addEventListener("DOMContentLoaded", function() {
+    // console.log("DOM loadeed !");
+  });
+  ```
+  #### AJAX request (XHR, Fetch, Axios)
+  ```javascript
+  /* ONREADYSTATECHANGE VERSION */
+  // Initiate request
+  var XHR = new XMLHttpRequest();
+
+  // Check request state/status
+  XHR.onreadystatechange = function() {
+      if(XHR.readyState == 4 && XHR.status == 200) {
+          console.log(XHR.responseText);
+      } else {
+          console.log(XHR.status);
+      }
+
+  }
+  
+  // Get url
+  XHR.open("GET", "../json/default.json");
+  // Specify type of data
+  XHR.responseType = 'json';
+  // Send request
+  XHR.send();
+  ```
+
+  ```javascript
+  /* ONLOAD VERSION */
+  var XHR = new XMLHttpRequest(),
+      method = 'GET',
+      url = '../json/default.json',
+      dataType = 'json';
+  
+  // Get url
+  XHR.open(method, url);
+
+  // Specify type of data
+  XHR.responseType = dataType;
+
+  /* onload event is only called if response succeed. So it can replace "XHR.onreadystatechange" verification */
+  XHR.onload = function() {
+    // Do stuff
+  }
+
+  // Send request
+  XHR.send();
+  ```
+
+  #### Fetch
+  ```javascript
+  // Request Url that will return promise 
+  fetch(url)
+  // The promise returns Response object (which contains all informations(status code, type, datas...)) 
+  .then(function(response) { 
+    console.log(response);
+  })
+  // If something goes wrong an error will be catched
+  .catch(function(error) {
+    console.log(error);
+  })
+  ```
+  ```javascript
+  /* Fetch with extract data with JSON method */
+  fetch(url)
+  .then(function(resp) { 
+    // parsing JSON response and return an JS object
+    return resp.json; 
+
+    /* the return can also be directly chained here */
+    //return resp.json.then(function(data) {});
+  })
+  // return datas of response's object
+  .then(function(data) {})
+  // The response return
+  .catch(function(error) {
+    console.log(error);
+  })
+  ```
+
+  **Fetch options**
+  ```javascript
+  fetch(url, {
+    //By default method is "GET"
+    method: "POST",
+    // body => Content to display
+    body: JSON.stringify ({
+      name : 'blue',
+      login: 'bluecat'
+    })
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .catch(function(data) {
+    console.log(data.status);
+  })
+  ```
+
+  **Axios**
+  ```javascript
+  axios.get(url)
+  .then(function(res) {
+    console.log(res.data);
+  })
+  .catch(function(e) {
+    console.log(e);
+  });
+  ```
+
 ---
-[Top](#snippet---best-practice---fed)
+[Top](#snippets---best-practice---fed)
