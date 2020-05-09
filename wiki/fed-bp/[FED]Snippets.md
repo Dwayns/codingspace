@@ -27,13 +27,24 @@
       - [Isolate jQuery($) and avoid conflicts](#isolate-jquery-and-avoid-conflicts)
       - [Ajax methods and shorthand](#ajax-methods-and-shorthand)
     - [Vanilla :](#vanilla)
+      - [forEach methods [Array methods]](#foreach-methods-array-methods)
+      - [Map methods [Array methods]](#map-methods-array-methods)
+      - [Filter methods [Array methods]](#filter-methods-array-methods)
+      - [Some methods [Array methods]](#some-methods-array-methods)
+      - [Every methods [Array methods]](#every-methods-array-methods)
+      - [Reduce methods [Array methods]](#reduce-methods-array-methods)
+      - [Closure](#closure)
+      - [Template literals (Template strings)](#template-literals-template-strings)
     - [**SNIPPETS**](#snippets-1)
       - [Check element](#check-element)
       - [Device detection [isMobile] :](#device-detection-ismobile)
       - [ScrollTo [JS]:](#scrollto-js)
       - [onLoad methods (Window or DOM)](#onload-methods-window-or-dom)
       - [AJAX request (XHR, Fetch, Axios)](#ajax-request-xhr-fetch-axios)
-      - [Fetch](#fetch)
+      - [Fetch / Axios](#fetch--axios)
+      - [Transform an arrayLike to an array](#transform-an-arraylike-to-an-array)
+      - [Create constructor ("new" keyword)](#create-constructor-%22new%22-keyword)
+      - [Prototype & Inheritance usage](#prototype--inheritance-usage)
 
 ---
 ---
@@ -100,7 +111,7 @@
   ```
 
   ```scss
-  @mixin fontFace ($fontfamily, $fontweight,$basepath,$basenameNoExtension){
+  @mixin fontFace ($fontfamily, $fontweight,$basepath,$basenameNoExtension) {
     @font-face {
       font-family: $fontfamily;
       font-style: normal;
@@ -376,9 +387,9 @@
   ```
   #### Isolate jQuery($) and avoid conflicts
   ```javascript
-  (function($, window){
+  (function($, window) {
     // use $ here freely if you think any other library might have overridden it outside.
-    $(function(){
+    $(function() {
       // do this after dom is ready
     });
   })(jQuery, window);
@@ -423,6 +434,260 @@
   ```
 
   ### Vanilla :
+  #### forEach methods [Array methods]
+  > Iterate over an array and returns "undefined" if nothing is returned. Like a function without `return` always returns "undefined".  
+  Use `forEach` if the need is to override values in array or change something externely.
+
+  ```javascript
+  /* How it works */
+  function forEach(array, callback) {
+    for(var i = o; i < array.length; i++) {
+      callback(array[i], i, array);
+    }
+  }
+
+  /* Loop in array - Example */
+  let myArray = [];
+
+  myArray.forEach(value, index, array) {
+    console.log(value, index, array);
+  }
+  ```
+  #### Map methods [Array methods]
+  > Creates a new array based values returns and pushed.  
+  Use `map` (bit mor friendly) instead `forEach` if the need to get a new array (specially with the same length) returned.
+
+  ```javascript
+  /* How it works */
+  function map(arr, callback) {
+    var newArr = [];
+    for(var i = 0; i < array.legth; i++) {
+      newArray.push(callback(array[i], i, array));
+    }
+
+    return newArray;
+  }
+
+  /* Map an array - Example */
+  // Extract some values and put them in a new array
+  let myArray = [{first:'Tim', last:'Garcia'}, {first:'Matt', last:'Lane'}];
+
+  myArray.map(function(value) {
+    return value.first;
+  }) // Expected ['Tim', 'Matt]
+  ```
+  #### Filter methods [Array methods]
+  > Always return a boolean(true).
+  ```javascript
+  /* How it works */
+  function filter(array, calback) {
+    var newArray= [];
+
+    for(var i = 0; i < array.length; i++) {
+      if(callback(array[i], i, array) {
+        newArray.push(array[i]);
+      }
+    }
+
+    return newArray;
+  }
+  /* Filter an array - Example */
+  let myArray = [1,2,3];
+
+  myArray.filter(function(value, index, array) {
+    // no need for an if statement
+    // just return an expression that evalaute to true or false
+    return value > 2
+  })
+  ```
+  #### Some methods [Array methods]
+  > Iterate through a array and return a true or false.  
+  If the callback returns "true" for at least one value, the entire `some`function returns "true". Otherwise it returns "false"
+
+  ```javascript
+  /* How it works */
+  function some(array, calback) {
+    for(var i = 0; i < array.length; i++) {
+      if(callback(array[i], i, array) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /* Some an array - Example */
+  let myArray = [1,2,3];
+
+  myArray.some(function(value, index, array) {
+    return value > 2;
+  }); // true
+  ```
+
+  #### Every methods [Array methods]
+  > Iterate through a array and return a true or false.  
+  If the callback returns "false" for at least one value, the entire `every`function returns "false". Otherwise it returns "true"
+
+  ```javascript
+  /* How it works */
+  function every(array, calback) {
+    for(var i = 0; i < array.length; i++) {
+      if(callback(array[i], i, array) === false) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
+
+  /* Every an array - Example */
+  let myArray = [1,2,3];
+
+  myArray.every(function(value, index, array) {
+    return value > 2;
+  }); // false
+  ```
+
+  #### Reduce methods [Array methods]
+  > Return an accumulated value.
+  Always return the new value of accumulator.
+
+  ```javascript
+  /* How it works */
+  // accumulator is the first value of array, nextValue is the second value of array
+  array.reduce(function(accumulator, nextValue, index, array) {
+    // Whatever is return here will be the new value of accumulator
+  }, optional second parameter); //if second parameter exist it will be the value of accumulator in the first iteration. The first value of array will be nextValue
+
+  /* Reduce an array - with numbers - Example */
+  var myArray = [1,2,3,4,5];
+
+  myArray.reduce(function(accumulator, nextVAlue){
+    return accumulator = nextVAlue;
+  },10); // 25 (11 > 13 > 16 > 20 > 25)
+
+  /* Reduce an array - with string - Example */
+  var myArray = ['Tim', 'Matt', 'Colt', 'Elie'];
+
+  myArray.reduce(function(accumulator, nextVAlue){
+    return accumulator = nextVAlue;
+  },'The instructors are'); // 'The instructors are Tim Matt Colt Elie'
+
+  /* Reduce an array - with objet - Example */
+  var myArray = [5,4,1,4,5];
+
+  myArray.reduce(function(accumulator, nextVAlue) {
+    if(nextValue in accumulator) {
+      accumulator[nextValue]++;
+    }  else {
+      accumulator[nextValue] = 1;
+    }
+    return accumulator;
+  }, {} );
+  ```
+
+  #### Closure
+  > A function that makes use of variables defined in outer functions that have previously returned.  
+  The inner function has to be returned to works.
+  CLosure don't remember everything from an outer function. (Just the variable they need)
+  >> Closures are usefull for creating private variables
+
+  ```javascript
+  /* How it works */
+  function outer(a) {
+    return function inner(b) { //this function can be anonymous.
+      // the inner fn is making use of "a" variable which is defined in outer/parent function called "outer"
+      // and by the time "inner" is called, that "outer" has returned this function called "inner" is a closure
+      return `${a + b}`;
+    }
+  }
+
+  /* The inner function can be called right away bien using extra () ... */
+  outer(5)(5); //10
+
+  /* ... or the result of the function can be stored in a variable */
+  var storeOuter = outer(5);
+  storeOuter(5); //10
+
+  /* Closure - Example */
+  function outer() {
+    var noUsedVar = "This var is not used in inner fn and will be forgot by inner fn";
+    var outerVar = "This var can be used by"
+    return function inner() {
+      return `${outerVar} this inner function`;
+    }
+  }
+  ```
+
+  **Private variables [Closure]**
+  ```javascript
+  /* Private variable - Closure - Example */
+  function counter() {
+    var count = 0;
+    return function() {
+      count++;
+      return count;
+    }
+  }
+
+  var counter1 = counter();
+  var counter2 = counter();
+
+  /* Each of this two variables have their own private "count" variable. Counter1 can't impact, modify Counter2 */
+  counter1(); //1
+  counter1(); //2
+
+  counter2(); //1 
+  counter1(); //3
+
+  ```
+
+  #### Template literals (Template strings)
+  ```javascript
+  `string text`
+
+  `string text line 1
+  string text line 2`
+
+  `string text ${expression} string text`
+
+  tag`string text ${expression} string text`
+  ```
+  **string substitution** [Template strings]  
+  ```javascript
+  /* Simple string substitution - Examples */
+  var name = "Brendan";
+  console.log(`Yo, ${name}!`);
+
+  /* Multi-line strings - Examples */
+  // With normal string
+  console.log('string text line 1\n' +
+  'string text line 2');
+
+  // With template literals
+  console.log(`string text line 1
+  string text line 2`);
+  ```
+  **Expression interpolation** [Template strings]
+  ```javascript
+  // With normal string
+  let a = 5;
+  let b = 10;
+  console.log('Fifteen is ' + (a + b) + ' and\nnot ' + (2 * a + b) + '.'); // "Fifteen is 15 and // not 20."
+
+  // With template literals
+  let a = 5;
+  let b = 10;
+  console.log(`Fifteen is ${a + b} and
+  not ${2 * a + b}.`); // "Fifteen is 15 and // not 20."
+  ```
+  **Case of functions inside expressions** [Template strings]
+  ```javascript
+  function fn() { return "I am a result. Rarr"; }
+  console.log(`foo ${fn()} bar`); //=> foo I am a result. Rarr bar.
+  ```
+  [Dev-Google - Template-Strings](https://developers.google.com/web/updates/2015/01/ES6-Template-Strings)
+
   **querySelectorAll + forEach (fix for IE & FF):**  
   ```javascript
   // querySelector send a nodeList and forEach (for IE and FF) needs a array, so [].slice.call() put the querySelector nodeList in a array.
@@ -627,7 +892,7 @@ document.addEventListener("DOMContentLoaded", function() {
   XHR.send();
   ```
 
-  #### Fetch
+  #### Fetch / Axios
   ```javascript
   // Request Url that will return promise 
   fetch(url)
@@ -688,5 +953,129 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   ```
 
+  #### Transform an arrayLike to an array
+  ```javascript
+  function arrayLikeToArray(arrayLikeObject) {
+    return [].slice.call(arrayLikeObject);
+  }
+  ```
+  #### Create constructor ("new" keyword)
+  > "new" keyword is magically generate our constructor by  
+     - Creates a empty object  
+     - Sets the keyword "This" to be that empty object  
+     - Adds the line "return this"to the end of the function, which follows it  
+     - Adds a property onto the empty object called ".__proto__" (which links the prototype on the constructor function to the empty object)
+  >> The constructor functions created mimics "classes" and the objects created from them mimics "instances".
+  
+  ```javascript
+  /* A name of constructor function always begin with a Maj */
+  function MyObject(arg1, Arg2, arg3) {
+    this.arg1 = arg1;
+    this.arg2 = arg2;
+    this.arg3 = function() {
+      return `My first arg : ${this.arg1}`;
+    };
+  }
+
+  const ampoule = new MyObject(jaune,rond,arg3);
+  ```
+  ```javascript
+  /* Examples */
+  function Car(make, model, year) {
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.numWheels = 4;
+  }
+
+  function Motorcylce(make, model, year) {
+    Car.call(this, make, model, year);
+    this.numWheels = 4;
+  }
+
+  function Motorcylce(make, model, year) {
+    // Here arguments generate the list of arguments in an array. USefull when a lot of arguments
+    Car.apply(this, arguments); // OR Car.apply(this, make, model, year);
+    this.numWheels = 4;
+  }
+  ```
+
+  #### Prototype & Inheritance usage
+  ```javascript
+  function Car(make, model, year) {
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    isRunning = true;
+    // To avoid multiple "duplication" this method has to be added in prototype of Car
+    /* this.honk = function() {
+      if(this.isRunning) {
+        return "Beeeeeeeep";
+      }
+    } */
+  }
+
+  // honk method is added to prototype of Car. More efficient.
+  Car.prototype.this.honk = function() {
+    if(this.isRunning) {
+      return "Beeeeeeeep";
+    }
+  }
+  ```
+  ```javascript
+  function Person(firstName, lastName){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.family = [];
+  }
+
+  Person.prototype.fullName = function(){
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+  let toto = new Person('Toto', 'Foo');
+  toto.fullname; // Toto Foo
+
+  Person.prototype.addToFamily = function(person){
+    // indexOf check if the element to add in array is not a duplicate
+    // instanceof check if the object to add is a object construced from the Person constructor
+    if(this.family.indexOf(person) === -1 && person instanceof Person){
+        this.family.push(person)
+    }
+    return this.family.length;
+  }
+  ```
+
+  **Inheritance**
+  ```javascript
+  function Person(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  Person.prototype.sayHi = function() {
+    return "Hello " + this.firstName; 
+  }
+
+  function Student(firstName, lastName) {
+    Person.apply(this, arguments);
+  }
+
+  var ella = new Student('Ella', 'Fi');
+  ella.lastName // Fi
+  ella.sayHi // undefined cause Student has no method "sayHi" onto his prototype.
+
+  /* This duplication is not good cause it's a reference/link to an existing object; not a new object */
+  // Student.prototype = Person.prototype;
+
+  /* This duplication will add additionnal unnecessary properties on object (since it's creating an object with undefined properties just for the prototype) */
+  // Student.prototype = new Person; 
+
+  // Solution to duplicate an existing object to a new object is the function Object.create()
+  Student.prototype = Object.create(Person.prototype);
+
+  // Student need to be rassigned to "Student prototype" instead the heritate "Person.prototype" due to "Object
+  Student.prototype.constructor = Student;
+  ```
 ---
 [Top](#snippets---best-practice---fed)
