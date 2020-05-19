@@ -1,6 +1,9 @@
 # LEXIQUE - DEV
 
  ## Vocabulaire
+ - **CLI :**
+ Command-Line Interface
+ 
  - **Parser/Parsage (Parsing) :**  
  L'analyse syntaxique => Convertir une chaîne de caractère en objet natif.  
 *(Le contraire de la stringification)*

@@ -5,6 +5,7 @@
   - [Terminal](#terminal)
     - [Search file :](#search-file)
       - [GREP command :](#grep-command)
+    - [List files](#list-files)
     - [Show file content (no edit) :](#show-file-content-no-edit)
     - [GLOBAL :](#global)
       - [Host (Win):](#host-win)
@@ -99,6 +100,39 @@
   grep  "ERROR\|CRITICAL" /opt/tomcat/log/*.log
   ```
   [Wodric - Commande grep](https://wodric.com/commande-grep/)
+
+  ### List files
+  **List all files in folder**
+  ```powershell
+  ls
+  ```
+
+  **List every files and folder**
+  ```powershell
+  ls -a
+
+  ls --all
+  ```
+
+  **List every files with display more detailed output**
+  ```powershell
+  #Show the permissions, number of inodes, the owner and the group, the file size, the last accessed date, and time and file name.
+
+  ls -l
+  ```
+
+  **List every files and folders with display more detailed output**
+  ```powershell
+  ls -la
+  ```
+
+  **Sort list**
+  ```powershell
+  ls --sort=none
+  ls --sort=size
+  ls --sort=time
+  ls --sort=version 
+  ```
 
   ### Show file content (no edit) :
   ```powershell
